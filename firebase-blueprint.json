@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information stored upon authentication.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique Firebase Auth UID of the user.",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the user.",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the user.",
+          "maxLength": 128
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "URL to the user profile avatar picture.",
+          "maxLength": 1024
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp of creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Server timestamp of last update."
+        }
+      },
+      "required": ["id", "email"]
+    },
+    "UserSummary": {
+      "title": "UserSummary",
+      "description": "A YouTube video intelligence summary saved by the user.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the summary record.",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "The UID of the owner who created this summary.",
+          "maxLength": 128
+        },
+        "videoId": {
+          "type": "string",
+          "description": "YouTube video ID.",
+          "maxLength": 64
+        },
+        "videoTitle": {
+          "type": "string",
+          "description": "Title of the analyzed YouTube video.",
+          "maxLength": 512
+        },
+        "videoChannel": {
+          "type": "string",
+          "description": "Channel name of the YouTube video.",
+          "maxLength": 256
+        },
+        "videoThumbnail": {
+          "type": "string",
+          "description": "Thumbnail URL of the YouTube video.",
+          "maxLength": 1024
+        },
+        "tldr": {
+          "type": "string",
+          "description": "The TL;DR overview of the video.",
+          "maxLength": 4096
+        },
+        "language": {
+          "type": "string",
+          "description": "Language code of the summary.",
+          "maxLength": 16
+        },
+        "summaryLength": {
+          "type": "string",
+          "description": "Length setting used (quick, detailed, comprehensive).",
+          "maxLength": 32
+        },
+        "style": {
+          "type": "string",
+          "description": "Style mode used (executive, technical, casual, etc.).",
+          "maxLength": 32
+        },
+        "summaryData": {
+          "type": "string",
+          "description": "Serialized JSON string of the complete StructuredSummary object.",
+          "maxLength": 500000
+        },
+        "isBookmarked": {
+          "type": "boolean",
+          "description": "Whether this summary is bookmarked by the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp of when the summary was saved."
+        }
+      },
+      "required": ["id", "userId", "videoId", "videoTitle", "tldr", "summaryData"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "User profile document accessible only by the owner."
+    },
+    "/users/{userId}/summaries/{summaryId}": {
+      "schema": {
+        "$ref": "#/entities/UserSummary"
+      },
+      "description": "Collection of video summaries saved by the authenticated user."
+    }
+  }
+}

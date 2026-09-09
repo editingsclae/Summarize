@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@media print {
+  /* Hide non-document interactive UI chrome */
+  header,
+  footer,
+  nav,
+  aside,
+  .no-print,
+  #back-to-landing-btn,
+  #print-export-btn,
+  #theme-toggle-btn,
+  #control-ask-ai-btn,
+  button,
+  input,
+  select,
+  [role="dialog"] {
+    display: none !important;
+  }
+
+  /* Page geometry & margin */
+  @page {
+    size: letter portrait;
+    margin: 15mm 15mm 15mm 15mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Reset layout constraints and overflow */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .max-w-5xl {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Document Card Formatting */
+  .bg-white,
+  .dark\:bg-neutral-900,
+  .dark\:bg-neutral-950,
+  .bg-neutral-50,
+  .dark\:bg-neutral-800,
+  .bg-neutral-100 {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Prevent awkward page break splitting across cards and sections */
+  section,
+  article,
+  .rounded-2xl,
+  .rounded-xl {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 14pt !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+  }
+
+  /* High contrast typography for print */
+  .text-white,
+  .dark\:text-neutral-100,
+  .dark\:text-neutral-200,
+  .dark\:text-neutral-300,
+  .dark\:text-white {
+    color: #0f172a !important;
+  }
+
+  .text-neutral-500,
+  .text-neutral-400,
+  .dark\:text-neutral-400,
+  .dark\:text-neutral-500 {
+    color: #475569 !important;
+  }
+
+  /* Printable tables */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    font-weight: 700 !important;
+    padding: 6px 10px !important;
+  }
+
+  td {
+    border: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+    padding: 6px 10px !important;
+  }
+
+  /* Preserved badges and colored tags */
+  span[class*="bg-indigo-"],
+  span[class*="bg-amber-"],
+  span[class*="bg-emerald-"],
+  span[class*="bg-rose-"],
+  span[class*="bg-blue-"],
+  span[class*="bg-purple-"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* External links */
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  /* Image sizing for report */
+  img {
+    max-height: 140px !important;
+    object-fit: cover !important;
+  }
+}

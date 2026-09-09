@@ -1,0 +1,93 @@
+import React, { useState } from 'react';
+import { CheckCircle2, ChevronRight, Check } from 'lucide-react';
+
+interface ActionItemsProps {
+  items: string[];
+}
+
+export const ActionItems: React.FC<ActionItemsProps> = ({ items }) => {
+  const [showAll, setShowAll] = useState(false);
+  const [completedIndices, setCompletedIndices] = useState<Record<number, boolean>>({});
+
+  // Fallbacks if items empty
+  const defaultItems = [
+    'Learn about AI tools and how to use them effectively.',
+    'Build relevant skills for the emerging automation economy.',
+    'Support responsible AI policies and ethical safeguards.'
+  ];
+
+  const list = items && items.length > 0 ? items : defaultItems;
+  const displayItems = showAll ? list : list.slice(0, 3);
+
+  const toggleComplete = (idx: number) => {
+    setCompletedIndices(prev => ({
+      ...prev,
+      [idx]: !prev[idx]
+    }));
+  };
+
+  return (
+    <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-5 shadow-xs">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3.5">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+          </div>
+          <h3 className="font-bold text-neutral-900 dark:text-white text-sm">
+            Action Items
+          </h3>
+        </div>
+
+        {list.length > 3 && (
+          <button
+            type="button"
+            onClick={() => setShowAll(!showAll)}
+            className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-0.5 cursor-pointer"
+          >
+            <span>{showAll ? 'Show less' : 'View all'}</span>
+            <ChevronRight className="w-3 h-3" />
+          </button>
+        )}
+      </div>
+
+      {/* Action Items List */}
+      <div className="space-y-2.5">
+        {displayItems.map((item, idx) => {
+          const isDone = !!completedIndices[idx];
+          return (
+            <div
+              key={idx}
+              onClick={() => toggleComplete(idx)}
+              className={`p-3 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer ${
+                isDone
+                  ? 'bg-emerald-50/40 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/40 opacity-70'
+                  : 'bg-neutral-50/70 dark:bg-neutral-850/40 border-neutral-200/60 dark:border-neutral-800/60 hover:border-indigo-200 dark:hover:border-indigo-800/60'
+              }`}
+            >
+              <div
+                className={`w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5 transition-colors ${
+                  isDone
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300'
+                }`}
+              >
+                {isDone ? <Check className="w-3 h-3 stroke-[3]" /> : idx + 1}
+              </div>
+
+              <p
+                className={`text-xs font-medium leading-snug ${
+                  isDone
+                    ? 'line-through text-neutral-400 dark:text-neutral-500'
+                    : 'text-neutral-800 dark:text-neutral-200'
+                }`}
+              >
+                {item}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};

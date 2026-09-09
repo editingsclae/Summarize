@@ -1,0 +1,6 @@
+{
+  "name": "VidBrief AI",
+  "description": "Professional AI-powered YouTube video summarization platform turning videos into structured executive briefings, key takeaways, facts, quotes, and action items.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
