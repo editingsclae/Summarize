@@ -1,7 +1,9 @@
 import React from 'react';
+import { GitFork } from 'lucide-react';
 
 export type SummaryTabType = 
   | 'Summary' 
+  | 'Mindmap'
   | 'Transcript' 
   | 'Timestamps' 
   | 'Key Facts' 
@@ -24,6 +26,7 @@ interface SummaryTabsProps {
 
 const TABS: SummaryTabType[] = [
   'Summary',
+  'Mindmap',
   'Transcript',
   'Timestamps',
   'Key Facts',
@@ -60,6 +63,7 @@ export const SummaryTabs: React.FC<SummaryTabsProps> = ({
                   : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'
               }`}
             >
+              {tab === 'Mindmap' && <GitFork className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
               <span>{tab}</span>
               {count > 0 && (
                 <span

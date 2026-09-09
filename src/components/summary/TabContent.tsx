@@ -20,6 +20,7 @@ import { KeyTakeaways } from './KeyTakeaways';
 import { DetailedSummary } from './DetailedSummary';
 import { ProsConsSection } from './ProsConsSection';
 import { ConclusionSection } from './ConclusionSection';
+import { MindmapView } from '../mindmap/MindmapView';
 
 interface TabContentProps {
   activeTab: SummaryTabType;
@@ -66,6 +67,14 @@ export const TabContent: React.FC<TabContentProps> = ({
 
         {/* Detailed Summary Chapters */}
         <DetailedSummary sections={summary.sections} videoId={summary.video.id} />
+      </div>
+    );
+  }
+
+  if (activeTab === 'Mindmap') {
+    return (
+      <div className="space-y-4 animate-fadeIn">
+        <MindmapView summary={summary} initialLanguage="ar" />
       </div>
     );
   }
