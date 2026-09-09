@@ -68,8 +68,8 @@ export const RecentSummaries: React.FC<RecentSummariesProps> = ({
                   : 'hover:bg-neutral-800/60 text-neutral-300'
               }`}
             >
-              {/* Thumbnail */}
-              <div className="w-12 h-8 rounded-lg overflow-hidden shrink-0 bg-neutral-800 relative border border-neutral-700/50">
+              {/* Thumbnail with overlay duration badge */}
+              <div className="w-13 h-9 rounded-lg overflow-hidden shrink-0 bg-neutral-800 relative border border-neutral-700/50">
                 <img
                   src={item.video.thumbnail}
                   alt={item.video.title}
@@ -78,6 +78,9 @@ export const RecentSummaries: React.FC<RecentSummariesProps> = ({
                     (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${item.video.id}/default.jpg`;
                   }}
                 />
+                <span className="absolute bottom-0.5 right-0.5 px-1 py-0.2 rounded bg-black/85 text-[8px] font-mono font-bold text-white leading-tight">
+                  {duration}
+                </span>
               </div>
 
               {/* Title & Info */}

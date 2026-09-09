@@ -65,15 +65,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="px-2 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
-                <Sparkles className="w-4 h-4 fill-white" />
+              <div className="w-8 h-8 rounded-xl bg-[#2563EB] flex items-center justify-center text-white shadow-sm shadow-blue-500/30">
+                <Play className="w-4 h-4 fill-white text-white translate-x-0.2" />
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="font-bold text-lg tracking-tight text-white font-display">
-                  VidBrief
+                  VidBrief.ai
                 </span>
-                <span className="px-1.5 py-0.5 rounded-md bg-indigo-500/30 text-indigo-300 text-[10px] font-mono font-bold tracking-wider uppercase border border-indigo-400/30">
-                  .ai
+                <span className="px-1.5 py-0.2 rounded bg-[#2563EB] text-white text-[10px] font-bold tracking-normal">
+                  Pro
                 </span>
               </div>
             </div>
@@ -113,9 +113,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onNavigate(item.id);
                   }
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
+                    ? 'bg-[#2563EB] text-white shadow-sm shadow-blue-600/30'
                     : 'text-neutral-400 hover:text-white hover:bg-neutral-800/60'
                 }`}
               >
@@ -186,17 +186,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className="w-full flex items-center justify-between p-2 rounded-2xl hover:bg-neutral-800/60 transition-colors text-left cursor-pointer group"
         >
           <div className="flex items-center gap-2.5 min-w-0">
-            {user?.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                alt={userName}
-                className="w-8 h-8 rounded-full object-cover border border-neutral-700"
-              />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-xs">
-                {userInitials}
-              </div>
-            )}
+            <img
+              src={user?.avatarUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80'}
+              alt={userName}
+              className="w-8 h-8 rounded-full object-cover border border-neutral-700 shrink-0"
+            />
             <div className="min-w-0">
               <p className="text-xs font-bold text-neutral-200 group-hover:text-white truncate">
                 {userName}

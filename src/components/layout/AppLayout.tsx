@@ -13,6 +13,7 @@ interface AppLayoutProps {
   onUpgradeClick: () => void;
   onSettingsClick: () => void;
   rightSidebar?: React.ReactNode;
+  onHeaderSummarize?: (url: string) => void;
   children: React.ReactNode;
 }
 
@@ -25,6 +26,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   onUpgradeClick,
   onSettingsClick,
   rightSidebar,
+  onHeaderSummarize,
   children
 }) => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -165,6 +167,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           hasRightSidebar={Boolean(rightSidebar)}
           onOpenSettings={onSettingsClick}
           onOpenPricing={onUpgradeClick}
+          onSummarize={onHeaderSummarize}
         />
 
         {/* Scrollable Body */}

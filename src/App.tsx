@@ -420,6 +420,7 @@ function AppContent() {
       }}
       onUpgradeClick={() => setIsPricingOpen(true)}
       onSettingsClick={() => setIsSettingsOpen(true)}
+      onHeaderSummarize={(url) => handleStartSummarize({ url })}
       rightSidebar={
         currentNav === 'new' ? (
           <NewSummaryRightSidebar
