@@ -21,6 +21,7 @@ import { DetailedSummary } from './DetailedSummary';
 import { ProsConsSection } from './ProsConsSection';
 import { ConclusionSection } from './ConclusionSection';
 import { MindmapView } from '../mindmap/MindmapView';
+import { InfographicView } from '../infographic/InfographicView';
 
 interface TabContentProps {
   activeTab: SummaryTabType;
@@ -67,6 +68,14 @@ export const TabContent: React.FC<TabContentProps> = ({
 
         {/* Detailed Summary Chapters */}
         <DetailedSummary sections={summary.sections} videoId={summary.video.id} />
+      </div>
+    );
+  }
+
+  if (activeTab === 'Infographic') {
+    return (
+      <div className="space-y-4 animate-fadeIn">
+        <InfographicView summary={summary} initialLanguage="ar" />
       </div>
     );
   }
