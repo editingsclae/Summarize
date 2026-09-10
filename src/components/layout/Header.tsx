@@ -121,29 +121,20 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         )}
 
-        {/* Light & Dark Mode Icons */}
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            onClick={() => setDarkMode(false)}
-            className={`p-2 rounded-xl transition-colors cursor-pointer ${
-              !isDark ? 'text-amber-500' : 'text-neutral-400 hover:text-neutral-600'
-            }`}
-            title="Light mode"
-          >
-            <Sun className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setDarkMode(true)}
-            className={`p-2 rounded-xl transition-colors cursor-pointer ${
-              isDark ? 'text-indigo-400' : 'text-neutral-400 hover:text-neutral-600'
-            }`}
-            title="Dark mode"
-          >
-            <Moon className="w-4 h-4" />
-          </button>
-        </div>
+        {/* Unified Light/Dark Mode Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setDarkMode(!isDark)}
+          className="flex items-center justify-center w-9 h-9 rounded-xl border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer shadow-2xs"
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {isDark ? (
+            <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform duration-200" />
+          ) : (
+            <Moon className="w-4 h-4 text-neutral-600 dark:text-neutral-300 hover:-rotate-12 transition-transform duration-200" />
+          )}
+        </button>
 
         {/* Notifications Bell with Red Indicator Dot */}
         <div className="relative">
