@@ -25,6 +25,7 @@ import { PricingModal } from './components/PricingModal';
 import { SettingsModal } from './components/SettingsModal';
 import { ManualTranscriptModal } from './components/ManualTranscriptModal';
 import { LoginPage } from './components/LoginPage';
+import { LandingPage } from './components/landing/LandingPage';
 import { VideoInput } from './components/VideoInput';
 import { NewSummaryView } from './components/summary/NewSummaryView';
 import { NewSummaryRightSidebar } from './components/layout/NewSummaryRightSidebar';
@@ -46,6 +47,8 @@ function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const [currentNav, setCurrentNav] = useState<NavItem>('home');
   const [activeTab, setActiveTab] = useState<SummaryTabType>('Summary');
+  const [unauthView, setUnauthView] = useState<'landing' | 'login'>('login');
+  const [pendingSummarizeUrl, setPendingSummarizeUrl] = useState<string | null>(null);
   
   // Default to sample video summary so the dashboard is immediately populated like the reference image
   const [summary, setSummary] = useState<StructuredSummary | null>(() => {
@@ -394,10 +397,28 @@ function AppContent() {
   }
 
   if (!user) {
+    if (unauthView === 'landing') {
+      return (
+        <LandingPage
+          onNavigateToLogin={(pendingUrl) => {
+            if (pendingUrl) setPendingSummarizeUrl(pendingUrl);
+            setUnauthView('login');
+          }}
+          onStartSummarize={(url) => {
+            handleStartSummarize({ url });
+          }}
+        />
+      );
+    }
+
     return (
       <LoginPage
-        onStartSummarize={(url) => {
-          handleStartSummarize({ url });
+        onNavigateToHome={() => setUnauthView('landing')}
+        onSuccess={() => {
+          if (pendingSummarizeUrl) {
+            handleStartSummarize({ url: pendingSummarizeUrl });
+            setPendingSummarizeUrl(null);
+          }
         }}
       />
     );
