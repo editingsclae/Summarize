@@ -695,6 +695,10 @@ function AppContent() {
             summary={summary}
             transcriptText={summary.transcript}
             transcriptSegments={summary.segments}
+            onUpdateSummary={(updated) => {
+              setSummary(updated);
+              saveToHistory(updated);
+            }}
           />
         </div>
       ) : (

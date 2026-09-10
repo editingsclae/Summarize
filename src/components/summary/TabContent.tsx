@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Copy, 
   Check, 
@@ -11,9 +11,14 @@ import {
   CheckCircle2, 
   BookMarked,
   Scale,
-  AlertCircle
+  AlertCircle,
+  Loader2,
+  List,
+  AlignLeft
 } from 'lucide-react';
 import { StructuredSummary } from '../../types/summary';
+import { TranscriptSegment } from '../../types/video';
+import { fetchTranscript } from '../../services/api';
 import { SummaryTabType } from './SummaryTabs';
 import { TLDRCard } from './TLDRCard';
 import { ExecutiveSummary } from './ExecutiveSummary';
@@ -28,18 +33,76 @@ interface TabContentProps {
   activeTab: SummaryTabType;
   summary: StructuredSummary;
   transcriptText?: string;
+  transcriptSegments?: TranscriptSegment[];
+  onUpdateSummary?: (updated: StructuredSummary) => void;
 }
 
 export const TabContent: React.FC<TabContentProps> = ({
   activeTab,
   summary,
-  transcriptText
+  transcriptText,
+  transcriptSegments,
+  onUpdateSummary,
 }) => {
   const [copiedTranscript, setCopiedTranscript] = useState(false);
   const [transcriptSearch, setTranscriptSearch] = useState('');
+  const [loadedTranscript, setLoadedTranscript] = useState<string | null>(transcriptText || summary.transcript || null);
+  const [loadedSegments, setLoadedSegments] = useState<TranscriptSegment[] | null>(transcriptSegments || (summary.segments as TranscriptSegment[]) || null);
+  const [isLoadingTranscript, setIsLoadingTranscript] = useState(false);
+  const [viewMode, setViewMode] = useState<'timestamped' | 'plain'>('timestamped');
+  const fetchAttemptedRef = React.useRef<Set<string>>(new Set());
+
+  // Keep state synced when props change
+  useEffect(() => {
+    setLoadedTranscript(transcriptText || summary.transcript || null);
+    setLoadedSegments(transcriptSegments || (summary.segments as TranscriptSegment[]) || null);
+  }, [summary.video.id, transcriptText, transcriptSegments]);
+
+  // Auto-fetch full transcript on demand if segments are missing
+  useEffect(() => {
+    const videoId = summary.video?.id;
+    if (!videoId) return;
+
+    const hasSegments = Boolean(loadedSegments && loadedSegments.length > 0);
+    const alreadyAttempted = fetchAttemptedRef.current.has(videoId);
+
+    if (activeTab === 'Transcript' && !hasSegments && !alreadyAttempted) {
+      fetchAttemptedRef.current.add(videoId);
+      let isMounted = true;
+      setIsLoadingTranscript(true);
+
+      fetchTranscript(videoId, summary.language || 'en')
+        .then((res) => {
+          if (!isMounted) return;
+          if (res && res.success && (res.segments?.length > 0 || res.fullText)) {
+            setLoadedTranscript(res.fullText);
+            setLoadedSegments(res.segments || []);
+            const updated: StructuredSummary = {
+              ...summary,
+              transcript: res.fullText,
+              segments: res.segments || [],
+              hasRealTranscript: true,
+            };
+            if (onUpdateSummary) {
+              onUpdateSummary(updated);
+            }
+          }
+        })
+        .catch((err) => {
+          console.warn('[TabContent] Auto-fetch transcript notice:', err);
+        })
+        .finally(() => {
+          if (isMounted) setIsLoadingTranscript(false);
+        });
+
+      return () => {
+        isMounted = false;
+      };
+    }
+  }, [activeTab, summary.video?.id, loadedSegments, onUpdateSummary]);
 
   const handleCopyTranscript = () => {
-    const textToCopy = transcriptText || summary.executiveSummary;
+    const textToCopy = loadedTranscript || transcriptText || summary.executiveSummary;
     navigator.clipboard.writeText(textToCopy);
     setCopiedTranscript(true);
     setTimeout(() => setCopiedTranscript(false), 2000);
@@ -50,8 +113,12 @@ export const TabContent: React.FC<TabContentProps> = ({
   };
 
   const formatSeconds = (secs: number) => {
-    const m = Math.floor(secs / 60);
+    const hours = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
     const s = Math.floor(secs % 60);
+    if (hours > 0) {
+      return `${hours}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
@@ -90,18 +157,25 @@ export const TabContent: React.FC<TabContentProps> = ({
   }
 
   if (activeTab === 'Transcript') {
-    const fullText = transcriptText || (summary.sections?.map(s => `[${s.title}]\n${s.summary}`).join('\n\n') || summary.executiveSummary);
+    const hasSegments = Boolean(loadedSegments && loadedSegments.length > 0);
+    const fullText = loadedTranscript || transcriptText || (summary.sections?.map(s => `[${s.title}]\n${s.summary}`).join('\n\n') || summary.executiveSummary);
     const paragraphs = fullText.split('\n\n').filter(p => p.trim());
-    const filtered = transcriptSearch.trim()
-      ? paragraphs.filter(p => p.toLowerCase().includes(transcriptSearch.toLowerCase()))
-      : paragraphs;
+    
+    // Filter segments or text based on search input
+    const filteredSegments = hasSegments
+      ? loadedSegments!.filter(seg => !transcriptSearch.trim() || seg.text.toLowerCase().includes(transcriptSearch.toLowerCase()))
+      : [];
 
-    const isSynthetic = summary.hasRealTranscript === false;
+    const filteredParagraphs = !hasSegments
+      ? (transcriptSearch.trim() ? paragraphs.filter(p => p.toLowerCase().includes(transcriptSearch.toLowerCase())) : paragraphs)
+      : [];
+
+    const isSynthetic = !hasSegments && summary.hasRealTranscript === false;
 
     return (
       <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-6 shadow-xs space-y-4">
         {/* Caption Notice for Live Streams without YouTube captions */}
-        {isSynthetic && (
+        {isSynthetic && !isLoadingTranscript && (
           <div className="p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/50 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <div className="text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
@@ -110,24 +184,65 @@ export const TabContent: React.FC<TabContentProps> = ({
           </div>
         )}
 
+        {/* Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-neutral-100 dark:border-neutral-800">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
               <FileText className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-neutral-900 dark:text-white text-base">
-                {isSynthetic ? 'Synthesized Content Breakdown' : 'Full Video Transcript'}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-neutral-900 dark:text-white text-base">
+                  {hasSegments ? 'Full Video Transcript' : (isSynthetic ? 'Synthesized Content Breakdown' : 'Full Video Transcript')}
+                </h3>
+                {hasSegments && (
+                  <span className="px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold">
+                    {loadedSegments!.length.toLocaleString()} lines
+                  </span>
+                )}
+              </div>
               <p className="text-xs text-neutral-400">
-                {isSynthetic 
-                  ? 'Chronological topic flow and key discussion phases' 
-                  : 'Complete speech-to-text transcript synchronized with audio'}
+                {hasSegments
+                  ? 'Verbatim speech-to-text synchronized with video timeline'
+                  : (isSynthetic ? 'Chronological topic flow and key discussion phases' : 'Complete speech-to-text transcript')}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* View Mode Toggle (Timestamped vs Plain) */}
+            {hasSegments && (
+              <div className="flex items-center rounded-xl bg-neutral-100 dark:bg-neutral-800 p-1 border border-neutral-200/60 dark:border-neutral-700/60 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('timestamped')}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-medium transition-all ${
+                    viewMode === 'timestamped'
+                      ? 'bg-white dark:bg-[#131B2E] text-indigo-600 dark:text-indigo-400 shadow-2xs font-semibold'
+                      : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200'
+                  }`}
+                  title="Show timestamped transcript"
+                >
+                  <List className="w-3.5 h-3.5" />
+                  <span>Timed</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('plain')}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-medium transition-all ${
+                    viewMode === 'plain'
+                      ? 'bg-white dark:bg-[#131B2E] text-indigo-600 dark:text-indigo-400 shadow-2xs font-semibold'
+                      : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200'
+                  }`}
+                  title="Show continuous text view"
+                >
+                  <AlignLeft className="w-3.5 h-3.5" />
+                  <span>Text</span>
+                </button>
+              </div>
+            )}
+
+            {/* Search Box */}
             <div className="relative">
               <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
               <input
@@ -139,6 +254,7 @@ export const TabContent: React.FC<TabContentProps> = ({
               />
             </div>
 
+            {/* Copy Button */}
             <button
               type="button"
               onClick={handleCopyTranscript}
@@ -150,17 +266,57 @@ export const TabContent: React.FC<TabContentProps> = ({
           </div>
         </div>
 
-        <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 no-scrollbar text-neutral-700 dark:text-neutral-300 text-xs sm:text-sm leading-relaxed">
-          {filtered.length === 0 ? (
-            <p className="text-center py-8 text-neutral-400 text-xs">No matching lines found.</p>
-          ) : (
-            filtered.map((para, i) => (
-              <div key={i} className="p-3 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-850/40 transition-colors border border-transparent hover:border-neutral-200/50 dark:hover:border-neutral-800/50">
-                <p>{para}</p>
-              </div>
-            ))
-          )}
-        </div>
+        {/* Body Content */}
+        {isLoadingTranscript ? (
+          <div className="py-16 flex flex-col items-center justify-center gap-3 text-neutral-400">
+            <Loader2 className="w-6 h-6 animate-spin text-indigo-500" />
+            <p className="text-xs font-medium">Fetching complete transcript from YouTube captions...</p>
+          </div>
+        ) : hasSegments && viewMode === 'timestamped' ? (
+          /* Timestamped Segments List (like YouTube's transcript panel) */
+          <div className="space-y-1 max-h-[600px] overflow-y-auto pr-2 no-scrollbar">
+            {filteredSegments.length === 0 ? (
+              <p className="text-center py-8 text-neutral-400 text-xs">No matching transcript lines found.</p>
+            ) : (
+              filteredSegments.map((seg, idx) => {
+                const timeFormatted = formatSeconds(seg.start);
+                const ytUrl = getYoutubeTimestampUrl(seg.start);
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors group"
+                  >
+                    <a
+                      href={ytUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-2 py-0.5 rounded-md font-mono text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-600 hover:text-white transition-colors shrink-0 mt-0.5"
+                      title="Jump to time on YouTube"
+                    >
+                      {timeFormatted}
+                    </a>
+                    <p className="text-xs sm:text-sm text-neutral-800 dark:text-neutral-200 leading-relaxed">
+                      {seg.text}
+                    </p>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        ) : (
+          /* Plain Text / Paragraphs view */
+          <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 no-scrollbar text-neutral-700 dark:text-neutral-300 text-xs sm:text-sm leading-relaxed">
+            {filteredParagraphs.length === 0 ? (
+              <p className="text-center py-8 text-neutral-400 text-xs">No matching lines found.</p>
+            ) : (
+              filteredParagraphs.map((para, i) => (
+                <div key={i} className="p-3 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-850/40 transition-colors border border-transparent hover:border-neutral-200/50 dark:hover:border-neutral-800/50">
+                  <p>{para}</p>
+                </div>
+              ))
+            )}
+          </div>
+        )}
       </div>
     );
   }
