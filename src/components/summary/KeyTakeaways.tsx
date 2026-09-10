@@ -81,16 +81,16 @@ export const KeyTakeaways: React.FC<KeyTakeawaysProps> = ({ takeaways }) => {
               className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-5 flex flex-col justify-between shadow-xs hover:border-indigo-200 dark:hover:border-indigo-800/60 transition-all group"
             >
               <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${badge.circleBg}`}>
+                <div className="flex items-start gap-3 mb-3">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 ${badge.circleBg}`}>
                     {index + 1}
                   </div>
-                  <h3 className="font-bold text-sm text-neutral-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+                  <h3 className="font-bold text-sm text-neutral-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2">
                     {item.title}
                   </h3>
                 </div>
 
-                <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal line-clamp-3 mb-4">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal mb-4">
                   {item.summary}
                 </p>
               </div>

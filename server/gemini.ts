@@ -183,7 +183,8 @@ CRITICAL QUALITY RULES:
 10. Categorize important points using: IMPORTANT, FACT, STATISTIC, WARNING, RECOMMENDATION, KEY IDEA, DEFINITION, ACTION. Be selective; do not mark everything as important.
 11. If the video naturally discusses comparisons, options, or evaluations, populate pros and cons. Otherwise keep them minimal.
 12. Answer: "What would I need to know if I didn't have time to watch the entire video?" Prioritize information value and density over superficial brevity.
-13. MANDATORY LANGUAGE CONSISTENCY: You MUST generate all human-readable text fields (tldr, executiveSummary, keyTakeaways titles and summaries, importantPoints point, sections titles and summaries, bullets, fact labels, quotes, action items, concepts, pros, cons, and conclusion) in the requested OUTPUT LANGUAGE. For Arabic (العربية), use fluent Modern Standard Arabic (العربية الفصحى). Never leave the text in English if another language is requested.`;
+13. MANDATORY LANGUAGE CONSISTENCY: You MUST generate all human-readable text fields (tldr, executiveSummary, keyTakeaways titles and summaries, importantPoints point, sections titles and summaries, bullets, fact labels, quotes, action items, concepts, pros, cons, and conclusion) in the requested OUTPUT LANGUAGE. For Arabic (العربية), use fluent Modern Standard Arabic (العربية الفصحى). Never leave the text in English if another language is requested.
+14. COMPLETENESS OF THOUGHTS AND SENTENCES: Every single title, summary, takeaway, important point, bullet, and sentence MUST be fully written out and grammatically complete. NEVER end titles or sentences with trailing ellipses ("...") or cut off mid-thought. Always express full thoughts with complete words and ending punctuation.`;
 
 /**
  * Format transcript segments with timestamp cues
