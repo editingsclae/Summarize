@@ -4,11 +4,9 @@ import { Sun, Moon } from 'lucide-react';
 export const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
-    const saved = localStorage.getItem('vidbrief_theme');
-    if (saved === 'dark') return true;
-    if (saved === 'light') return false;
-    // Default to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('vidbrief_theme') || localStorage.getItem('theme');
+    // Main default theme is light mode
+    return saved === 'dark';
   });
 
   useEffect(() => {
@@ -16,9 +14,11 @@ export const ThemeToggle: React.FC = () => {
     if (isDark) {
       root.classList.add('dark');
       localStorage.setItem('vidbrief_theme', 'dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       root.classList.remove('dark');
       localStorage.setItem('vidbrief_theme', 'light');
+      localStorage.setItem('theme', 'light');
     }
   }, [isDark]);
 

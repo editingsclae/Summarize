@@ -45,11 +45,13 @@ export const Header: React.FC<HeaderProps> = ({
     const root = document.documentElement;
     if (dark) {
       root.classList.add('dark');
-      localStorage.theme = 'dark';
+      localStorage.setItem('vidbrief_theme', 'dark');
+      localStorage.setItem('theme', 'dark');
       setIsDark(true);
     } else {
       root.classList.remove('dark');
-      localStorage.theme = 'light';
+      localStorage.setItem('vidbrief_theme', 'light');
+      localStorage.setItem('theme', 'light');
       setIsDark(false);
     }
   };

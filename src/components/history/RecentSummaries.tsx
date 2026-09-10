@@ -37,14 +37,14 @@ export const RecentSummaries: React.FC<RecentSummariesProps> = ({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between px-3">
-        <h4 className="text-[11px] font-bold text-neutral-400 dark:text-neutral-400 tracking-wider uppercase">
+        <h4 className="text-[11px] font-bold text-neutral-500 dark:text-neutral-400 tracking-wider uppercase">
           Recent Summaries
         </h4>
         {onViewAll && (
           <button
             type="button"
             onClick={onViewAll}
-            className="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
+            className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors cursor-pointer"
           >
             View all
           </button>
@@ -64,12 +64,12 @@ export const RecentSummaries: React.FC<RecentSummariesProps> = ({
               onClick={() => onSelectSummary(item.summary)}
               className={`w-full text-left p-2 rounded-2xl flex items-center gap-2.5 transition-all cursor-pointer group ${
                 isActive
-                  ? 'bg-neutral-800 text-white'
-                  : 'hover:bg-neutral-800/60 text-neutral-300'
+                  ? 'bg-indigo-50 dark:bg-neutral-800 text-indigo-950 dark:text-white border border-indigo-200/60 dark:border-transparent font-medium shadow-2xs'
+                  : 'hover:bg-neutral-100 dark:hover:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300'
               }`}
             >
               {/* Thumbnail with overlay duration badge */}
-              <div className="w-13 h-9 rounded-lg overflow-hidden shrink-0 bg-neutral-800 relative border border-neutral-700/50">
+              <div className="w-13 h-9 rounded-lg overflow-hidden shrink-0 bg-neutral-100 dark:bg-neutral-800 relative border border-neutral-200 dark:border-neutral-700/50">
                 <img
                   src={item.video.thumbnail}
                   alt={item.video.title}
@@ -85,10 +85,10 @@ export const RecentSummaries: React.FC<RecentSummariesProps> = ({
 
               {/* Title & Info */}
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-neutral-200 group-hover:text-white truncate">
+                <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-950 dark:group-hover:text-white truncate">
                   {item.video.title}
                 </p>
-                <p className="text-[10px] text-neutral-400 flex items-center gap-1 mt-0.5 font-mono">
+                <p className="text-[10px] text-neutral-400 dark:text-neutral-400 flex items-center gap-1 mt-0.5 font-mono">
                   <span>{duration}</span>
                   <span>•</span>
                   <span>{relativeTime}</span>

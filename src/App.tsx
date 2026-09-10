@@ -379,12 +379,12 @@ function AppContent() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0D1321] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#0D1321] text-neutral-900 dark:text-white">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-xl animate-pulse">
             <Sparkles className="w-6 h-6 fill-white" />
           </div>
-          <div className="flex items-center gap-2.5 text-xs font-semibold text-neutral-400">
+          <div className="flex items-center gap-2.5 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
             <div className="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
             <span>Loading VidBrief.ai...</span>
           </div>
