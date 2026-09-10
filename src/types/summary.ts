@@ -81,6 +81,9 @@ export interface StructuredSummary {
   style?: SummaryStyle;
   language?: string;
   generatedAt: string;
+  transcript?: string;
+  segments?: any[];
+  hasRealTranscript?: boolean;
 }
 
 export interface SavedSummaryRecord {

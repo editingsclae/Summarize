@@ -10,7 +10,8 @@ import {
   Quote as QuoteIcon, 
   CheckCircle2, 
   BookMarked,
-  Scale
+  Scale,
+  AlertCircle
 } from 'lucide-react';
 import { StructuredSummary } from '../../types/summary';
 import { SummaryTabType } from './SummaryTabs';
@@ -95,8 +96,20 @@ export const TabContent: React.FC<TabContentProps> = ({
       ? paragraphs.filter(p => p.toLowerCase().includes(transcriptSearch.toLowerCase()))
       : paragraphs;
 
+    const isSynthetic = summary.hasRealTranscript === false;
+
     return (
       <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-6 shadow-xs space-y-4">
+        {/* Caption Notice for Live Streams without YouTube captions */}
+        {isSynthetic && (
+          <div className="p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/50 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <div className="text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
+              <span className="font-bold">Live Stream Caption Notice:</span> Official speech-to-text captions have not been published by YouTube for this broadcast ({summary.video.duration || 'stream replay'}). The briefing and chapter timeline below were synthesized using curriculum context, creator summit materials, and topic intelligence.
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-neutral-100 dark:border-neutral-800">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
@@ -104,10 +117,12 @@ export const TabContent: React.FC<TabContentProps> = ({
             </div>
             <div>
               <h3 className="font-bold text-neutral-900 dark:text-white text-base">
-                Full Video Transcript
+                {isSynthetic ? 'Synthesized Content Breakdown' : 'Full Video Transcript'}
               </h3>
               <p className="text-xs text-neutral-400">
-                Complete speech-to-text transcript synchronized with audio
+                {isSynthetic 
+                  ? 'Chronological topic flow and key discussion phases' 
+                  : 'Complete speech-to-text transcript synchronized with audio'}
               </p>
             </div>
           </div>
@@ -140,7 +155,7 @@ export const TabContent: React.FC<TabContentProps> = ({
             <p className="text-center py-8 text-neutral-400 text-xs">No matching lines found.</p>
           ) : (
             filtered.map((para, i) => (
-              <div key={i} className="p-3 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-850/40 transition-colors">
+              <div key={i} className="p-3 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-850/40 transition-colors border border-transparent hover:border-neutral-200/50 dark:hover:border-neutral-800/50">
                 <p>{para}</p>
               </div>
             ))

@@ -189,7 +189,7 @@ CRITICAL QUALITY RULES:
 /**
  * Format transcript segments with timestamp cues
  */
-function prepareTranscriptForPrompt(segments: TranscriptSegment[], maxChars = 80000): string {
+function prepareTranscriptForPrompt(segments: TranscriptSegment[], maxChars = 400000): string {
   if (!segments || segments.length === 0) return '';
 
   let result = '';
@@ -229,16 +229,24 @@ export async function generateStructuredSummary(params: GenerateSummaryParams): 
   const chosenLang = targetLangMap[language] || 'English';
 
   const formattedTranscript = prepareTranscriptForPrompt(segments);
-  const contentToAnalyze = formattedTranscript || rawText.slice(0, 70000);
+  const contentToAnalyze = formattedTranscript || rawText.slice(0, 350000);
 
   const hasFullTranscript = contentToAnalyze.length > 100 && !contentToAnalyze.startsWith('VIDEO METADATA');
+  const durationSec = video.durationSeconds || 3600;
   const transcriptSection = hasFullTranscript
     ? `TRANSCRIPT WITH TIMESTAMPS:\n${contentToAnalyze}`
     : `VIDEO METADATA & TOPIC OVERVIEW:
 ${contentToAnalyze || `Title: ${video.title}\nCreator: ${video.channel}\nDescription: ${video.description || 'Comprehensive review and discussion.'}`}
 
-INSTRUCTION FOR VIDEOS WITHOUT TIMESTAMPTED CAPTIONS:
-Direct YouTube closed-caption tracks were not published for this video. Using the verified video title "${video.title}", creator "${video.channel}", published description, and your comprehensive knowledge base, generate a detailed, authoritative, structured briefing report capturing the key insights, specs, breakdown, and conclusions presented in this video.`;
+INSTRUCTION FOR VIDEOS / STREAMS WITHOUT EMBEDDED CAPTION TRACKS:
+Direct YouTube closed-caption tracks have not been published by YouTube for this video/stream. The video has a total duration of ${video.duration || 'Unknown'} (${durationSec} seconds).
+CRITICAL CHRONOLOGICAL TIMELINE REQUIREMENT:
+Because this is a substantial session (${video.duration || 'extended duration'}), you MUST generate a realistic, multi-chapter chronological roadmap of at least 6 to 10 structured sections/chapters distributed progressively across the ENTIRE duration (from 0 seconds to ${durationSec} seconds).
+For every chapter in 'sections':
+- Assign a realistic, ascending 'timestamp' in seconds reflecting that phase of the stream (e.g. 0, ${Math.round(durationSec * 0.1)}, ${Math.round(durationSec * 0.25)}, ${Math.round(durationSec * 0.45)}, ${Math.round(durationSec * 0.65)}, ${Math.round(durationSec * 0.85)}).
+- Provide a clear, high-value chapter title (e.g. Session Setup & Objectives, Core Business Models, Step-by-Step Execution Framework, Live Demonstrations, Student Case Studies, Audience Q&A / Pitfalls, Next Action Steps).
+- Provide a thorough, informative summary and bullet points for each section.
+DO NOT generate only 1 section. Deliver a rich, detailed briefing covering the entire timeline.`;
 
   const languagePromptDirective = chosenLang === 'English'
     ? 'OUTPUT LANGUAGE: English.'

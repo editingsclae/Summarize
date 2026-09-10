@@ -176,22 +176,26 @@ async function startServer() {
       let segments = [];
       let rawText = '';
       let transcriptSource: 'youtube_captions' | 'speech_to_text' = 'youtube_captions';
+      let hasRealTranscript = false;
 
       if (customTranscript && customTranscript.trim().length > 20) {
         rawText = customTranscript.trim();
         segments = [{ start: 0, duration: 10, text: rawText }];
         transcriptSource = 'speech_to_text';
+        hasRealTranscript = true;
       } else {
         const transcriptResult = await fetchTranscript(videoId, language);
         if (transcriptResult.success && transcriptResult.segments.length > 0) {
           segments = transcriptResult.segments;
           rawText = transcriptResult.fullText;
           transcriptSource = transcriptResult.source;
+          hasRealTranscript = true;
         } else if (sampleMatch) {
           // If transcript retrieval blocked on cloud IP for sample video, use embedded transcript
           rawText = sampleMatch.transcript || sampleMatch.summary.executiveSummary;
           segments = sampleMatch.segments || [{ start: 0, duration: 60, text: rawText }];
           transcriptSource = 'youtube_captions';
+          hasRealTranscript = true;
         } else {
           const isOngoingLive = videoMeta.isLive && videoMeta.liveStatus !== 'completed';
           if (isOngoingLive) {
@@ -210,9 +214,10 @@ async function startServer() {
           const contextOverview = `VIDEO METADATA & CONTEXT:
 Title: ${videoMeta.title}
 Channel / Creator: ${videoMeta.channel}
-Duration: ${videoMeta.duration || 'Standard'}
+Duration: ${videoMeta.duration || 'Standard'} (${videoMeta.durationSeconds || 0} seconds)
 Published: ${videoMeta.publishedAt || 'Recently published'}
-Description / Overview: ${videoMeta.description || 'Comprehensive video review, breakdown, and analysis.'}`;
+Description / Overview: ${videoMeta.description || 'Comprehensive video review, breakdown, and analysis.'}
+NOTE: YouTube closed-caption tracks were not published for this video broadcast.`;
 
           rawText = contextOverview;
           segments = [
@@ -223,6 +228,7 @@ Description / Overview: ${videoMeta.description || 'Comprehensive video review, 
             },
           ];
           transcriptSource = 'speech_to_text';
+          hasRealTranscript = false;
         }
       }
 
@@ -331,12 +337,18 @@ Description / Overview: ${videoMeta.description || 'Comprehensive video review, 
           style: style || 'professional',
           language: language || 'en',
           generatedAt: new Date().toISOString(),
+          transcript: rawText,
+          segments,
+          hasRealTranscript,
         };
 
         res.json({
           video: videoMeta,
           summary: fallbackSummary,
+          transcript: rawText,
+          segments,
           transcriptSource,
+          hasRealTranscript,
         });
         return;
       }
@@ -351,10 +363,20 @@ Description / Overview: ${videoMeta.description || 'Comprehensive video review, 
         style,
       });
 
+      const fullSummary = {
+        ...summary,
+        transcript: rawText,
+        segments,
+        hasRealTranscript,
+      };
+
       res.json({
         video: videoMeta,
-        summary,
+        summary: fullSummary,
+        transcript: rawText,
+        segments,
         transcriptSource,
+        hasRealTranscript,
       });
     } catch (err: unknown) {
       console.error('Summarization failed:', err);

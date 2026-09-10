@@ -693,6 +693,8 @@ function AppContent() {
           <TabContent
             activeTab={activeTab}
             summary={summary}
+            transcriptText={summary.transcript}
+            transcriptSegments={summary.segments}
           />
         </div>
       ) : (
