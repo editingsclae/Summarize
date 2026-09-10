@@ -395,9 +395,11 @@ function AppContent() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0A0F1D] flex flex-col items-center justify-center p-4">
-        <LoginPage />
-      </div>
+      <LoginPage
+        onStartSummarize={(url) => {
+          handleStartSummarize({ url });
+        }}
+      />
     );
   }
 
