@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  AlertCircle, 
-  Sparkles, 
-  Compass, 
-  Bookmark, 
+import {
+  AlertCircle,
+  Sparkles,
+  Compass,
+  Bookmark,
   Cloud,
   FileDown,
   FileText,
@@ -35,11 +35,11 @@ import { VideoMetadata } from './types/video';
 import { summarizeVideo, translateSummary } from './services/api';
 import { SAMPLE_VIDEOS, SampleVideo } from './services/sampleData';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { 
-  saveSummaryToCloud, 
+import {
+  saveSummaryToCloud,
   fetchUserCloudData,
   toggleBookmarkInCloud,
-  deleteSummaryFromCloud 
+  deleteSummaryFromCloud
 } from './services/firebase';
 import { downloadPdf, downloadMarkdown } from './utils/export';
 
@@ -47,15 +47,15 @@ function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const [currentNav, setCurrentNav] = useState<NavItem>('home');
   const [activeTab, setActiveTab] = useState<SummaryTabType>('Summary');
-  const [unauthView, setUnauthView] = useState<'landing' | 'login'>('login');
+  const [unauthView, setUnauthView] = useState<'landing' | 'login'>('landing');
   const [pendingSummarizeUrl, setPendingSummarizeUrl] = useState<string | null>(null);
-  
+
   // Default to sample video summary so the dashboard is immediately populated like the reference image
   const [summary, setSummary] = useState<StructuredSummary | null>(() => {
     try {
       const saved = localStorage.getItem('vidbrief_active_summary');
       if (saved) return JSON.parse(saved);
-    } catch {}
+    } catch { }
     return SAMPLE_VIDEOS[0]?.summary || null;
   });
 
@@ -70,7 +70,7 @@ function AppContent() {
     try {
       const saved = localStorage.getItem('vidbrief_saved_ids');
       if (saved) return JSON.parse(saved);
-    } catch {}
+    } catch { }
     return [SAMPLE_VIDEOS[0]?.id || ''];
   });
   const [isBookmarkSaving, setIsBookmarkSaving] = useState(false);
@@ -107,7 +107,7 @@ function AppContent() {
     try {
       const saved = localStorage.getItem('vidbrief_history');
       if (saved) return JSON.parse(saved);
-    } catch {}
+    } catch { }
     return SAMPLE_VIDEOS.map((s) => s.summary);
   });
 
@@ -151,21 +151,21 @@ function AppContent() {
   useEffect(() => {
     try {
       localStorage.setItem('vidbrief_history', JSON.stringify(history));
-    } catch {}
+    } catch { }
   }, [history]);
 
   useEffect(() => {
     if (summary) {
       try {
         localStorage.setItem('vidbrief_active_summary', JSON.stringify(summary));
-      } catch {}
+      } catch { }
     }
   }, [summary]);
 
   useEffect(() => {
     try {
       localStorage.setItem('vidbrief_saved_ids', JSON.stringify(savedVideoIds));
-    } catch {}
+    } catch { }
   }, [savedVideoIds]);
 
   const saveToHistory = (newSummary: StructuredSummary) => {
@@ -263,7 +263,7 @@ function AppContent() {
       const next = newSavedStatus ? [...prev, vidId] : prev.filter((id) => id !== vidId);
       try {
         localStorage.setItem('vidbrief_saved_ids', JSON.stringify(next));
-      } catch {}
+      } catch { }
       return next;
     });
 
@@ -318,7 +318,7 @@ function AppContent() {
         title: summary.video.title,
         text: summary.tldr,
         url: summary.video.url,
-      }).catch(() => {});
+      }).catch(() => { });
     } else {
       navigator.clipboard.writeText(summary.video.url);
       setToastMessage({
@@ -779,21 +779,20 @@ function AppContent() {
           className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 max-w-sm sm:max-w-md px-4 py-3 rounded-2xl bg-neutral-900/95 dark:bg-[#131B2E]/95 text-white border border-neutral-700/80 shadow-2xl backdrop-blur-md flex items-start gap-3 animate-in fade-in slide-in-from-bottom-3 duration-200"
         >
           <div
-            className={`p-2 rounded-xl shrink-0 mt-0.5 ${
-              toastMessage.iconType === 'pdf'
+            className={`p-2 rounded-xl shrink-0 mt-0.5 ${toastMessage.iconType === 'pdf'
                 ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
                 : toastMessage.iconType === 'markdown'
-                ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
-                : toastMessage.iconType === 'bookmark'
-                ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                : toastMessage.iconType === 'link'
-                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                : toastMessage.type === 'success'
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                : toastMessage.type === 'error'
-                ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-                : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
-            }`}
+                  ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
+                  : toastMessage.iconType === 'bookmark'
+                    ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                    : toastMessage.iconType === 'link'
+                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                      : toastMessage.type === 'success'
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                        : toastMessage.type === 'error'
+                          ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                          : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
+              }`}
           >
             {toastMessage.iconType === 'pdf' ? (
               <FileText className="w-4 h-4" />
