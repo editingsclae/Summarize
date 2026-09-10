@@ -686,6 +686,7 @@ function AppContent() {
               quotes: summary.quotes?.length,
               actionItems: summary.actionItems?.length,
               concepts: summary.concepts?.length,
+              prosCons: (summary.pros?.length || 0) + (summary.cons?.length || 0),
             }}
           />
 
