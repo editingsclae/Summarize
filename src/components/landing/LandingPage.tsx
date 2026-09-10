@@ -361,127 +361,184 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* 4. PRODUCT SHOWCASE & EVERYTHING YOU NEED IN ONE PLACE                    */}
           {/* ========================================================================= */}
           <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center max-w-6xl mx-auto" id="how-it-works">
-            {/* Left: Engineered Dashboard Mockup Preview */}
-            <div className="lg:col-span-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#0B101D] shadow-[0_12px_40px_-10px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_40px_-10px_rgba(0,0,0,0.35)] overflow-hidden text-left">
+            {/* Left: Dashboard Mockup Preview Matching Reference Image */}
+            <div className="lg:col-span-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#0D1321] shadow-[0_12px_40px_-10px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_40px_-10px_rgba(0,0,0,0.35)] overflow-hidden text-left">
               {/* Window Bar */}
-              <div className="px-4 py-2 bg-neutral-50 dark:bg-[#080C14] border-b border-neutral-200/80 dark:border-neutral-800 flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                <div className="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                <div className="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                <span className="text-[10px] text-neutral-400 dark:text-neutral-500 font-mono ml-2">vidbrief.ai/app</span>
+              <div className="px-4 py-2.5 bg-neutral-50/90 dark:bg-[#090D16] border-b border-neutral-200/80 dark:border-neutral-800 flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#EF4444]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]" />
+                <span className="text-[11px] text-neutral-400 dark:text-neutral-500 font-mono ml-2">
+                  vidbrief.ai/dashboard
+                </span>
               </div>
 
               {/* Mockup App Interface */}
               <div className="flex flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-neutral-200/80 dark:divide-neutral-800">
                 {/* Mini Sidebar */}
-                <div className="w-full sm:w-44 p-3 bg-neutral-50/50 dark:bg-[#090D16] shrink-0 space-y-3.5 text-left">
-                  <div className="flex items-center gap-1.5 px-1">
-                    <div className="w-4 h-4 rounded bg-indigo-600 flex items-center justify-center text-white">
-                      <Play className="w-2 h-2 fill-white" />
+                <div className="w-full sm:w-48 p-3.5 bg-neutral-50/40 dark:bg-[#090D16] shrink-0 space-y-4 text-left">
+                  {/* Brand Header */}
+                  <div className="flex items-center gap-2 px-1">
+                    <div className="w-6 h-6 rounded-lg bg-[#2563EB] flex items-center justify-center text-white shadow-xs">
+                      <Play className="w-3 h-3 fill-white translate-x-0.2" />
                     </div>
-                    <span className="font-semibold text-[11px] text-neutral-900 dark:text-white">VidBrief.ai</span>
-                    <span className="px-1 rounded bg-neutral-200 dark:bg-neutral-800 text-[8px] font-medium text-neutral-600 dark:text-neutral-300">Pro</span>
+                    <span className="font-bold text-xs text-neutral-900 dark:text-white tracking-tight">
+                      VidBrief.ai
+                    </span>
+                    <span className="px-1.5 py-0.2 rounded-full bg-[#2563EB] text-white text-[9px] font-bold leading-none">
+                      Pro
+                    </span>
                   </div>
 
-                  <div className="space-y-0.5">
-                    <div className="px-2 py-1.5 rounded-md bg-neutral-200/70 dark:bg-neutral-800 text-neutral-900 dark:text-white text-[10px] font-semibold flex items-center gap-2">
-                      <FileText className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                  {/* Nav Items */}
+                  <div className="space-y-1">
+                    <div className="px-3 py-2 rounded-xl bg-[#2563EB] text-white text-xs font-semibold flex items-center gap-2.5 shadow-sm shadow-blue-500/20">
+                      <FileText className="w-3.5 h-3.5 text-white" />
                       <span>Home</span>
                     </div>
-                    <div className="px-2 py-1.5 rounded-md text-neutral-600 dark:text-neutral-400 text-[10px] font-medium flex items-center gap-2">
-                      <PlusCircle className="w-3 h-3" />
+                    <div className="px-3 py-1.5 rounded-lg text-neutral-600 dark:text-neutral-400 text-xs font-medium flex items-center gap-2.5 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                      <PlusCircle className="w-3.5 h-3.5" />
                       <span>New Summary</span>
                     </div>
-                    <div className="px-2 py-1.5 rounded-md text-neutral-600 dark:text-neutral-400 text-[10px] font-medium flex items-center gap-2">
-                      <HistoryIcon className="w-3 h-3" />
+                    <div className="px-3 py-1.5 rounded-lg text-neutral-600 dark:text-neutral-400 text-xs font-medium flex items-center gap-2.5 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                      <HistoryIcon className="w-3.5 h-3.5" />
                       <span>History</span>
                     </div>
-                    <div className="px-2 py-1.5 rounded-md text-neutral-600 dark:text-neutral-400 text-[10px] font-medium flex items-center gap-2">
-                      <Bookmark className="w-3 h-3" />
+                    <div className="px-3 py-1.5 rounded-lg text-neutral-600 dark:text-neutral-400 text-xs font-medium flex items-center gap-2.5 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                      <Bookmark className="w-3.5 h-3.5" />
                       <span>Saved</span>
                     </div>
-                    <div className="px-2 py-1.5 rounded-md text-neutral-600 dark:text-neutral-400 text-[10px] font-medium flex items-center gap-2">
-                      <Compass className="w-3 h-3" />
+                    <div className="px-3 py-1.5 rounded-lg text-neutral-600 dark:text-neutral-400 text-xs font-medium flex items-center gap-2.5 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                      <Compass className="w-3.5 h-3.5" />
                       <span>Explore</span>
                     </div>
-                    <div className="px-2 py-1.5 rounded-md text-neutral-600 dark:text-neutral-400 text-[10px] font-medium flex items-center gap-2">
-                      <Settings className="w-3 h-3" />
+                    <div className="px-3 py-1.5 rounded-lg text-neutral-600 dark:text-neutral-400 text-xs font-medium flex items-center gap-2.5 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                      <Settings className="w-3.5 h-3.5" />
                       <span>Settings</span>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-neutral-200/80 dark:border-neutral-800 space-y-1">
-                    <p className="text-[9px] font-medium text-neutral-400 uppercase tracking-wider px-1">Recent</p>
-                    <div className="p-1 rounded bg-neutral-200/60 dark:bg-neutral-800/60 text-[9px] font-medium text-neutral-800 dark:text-neutral-200 truncate">
+                  {/* Recent Summaries Section */}
+                  <div className="pt-3 border-t border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
+                    <p className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider px-1">
+                      RECENT SUMMARIES
+                    </p>
+                    <div className="px-2.5 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800/80 text-[10px] font-semibold text-neutral-800 dark:text-neutral-200 truncate">
                       The Future of AI
                     </div>
-                    <div className="p-1 text-[9px] text-neutral-500 dark:text-neutral-400 truncate">
+                    <div className="px-2.5 py-1.5 text-[10px] text-neutral-500 dark:text-neutral-400 truncate font-medium">
                       How to Build a Startup
+                    </div>
+                    <div className="px-2.5 py-1.5 text-[10px] text-neutral-500 dark:text-neutral-400 truncate font-medium">
+                      Clean Energy Explained
                     </div>
                   </div>
                 </div>
 
                 {/* Main Mock Content */}
-                <div className="flex-1 p-4 space-y-3 bg-white dark:bg-[#0B101D]">
+                <div className="flex-1 p-4 sm:p-5 space-y-3.5 bg-white dark:bg-[#0D1321]">
+                  {/* Top Search & Action Bar */}
+                  <div className="flex items-center gap-2 pb-1">
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-100/90 dark:bg-neutral-800/80 text-xs text-neutral-400 flex-1">
+                      <LinkIcon className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                      <span className="truncate">Paste a YouTube URL here...</span>
+                    </div>
+                    <div className="px-3 py-1.5 rounded-lg bg-[#2563EB] text-white text-xs font-semibold flex items-center gap-1.5 shrink-0 shadow-xs">
+                      <Sparkles className="w-3 h-3 fill-current" />
+                      <span>Summarize Video</span>
+                    </div>
+                  </div>
+
                   {/* Video Overview Row */}
-                  <div className="flex flex-col sm:flex-row gap-3 items-start">
-                    <div className="w-full sm:w-32 aspect-video rounded-lg overflow-hidden bg-neutral-900 relative shrink-0">
+                  <div className="flex flex-col sm:flex-row gap-3.5 items-start">
+                    {/* Vibrant Thumbnail */}
+                    <div className="w-full sm:w-44 aspect-[16/10] rounded-xl overflow-hidden bg-gradient-to-tr from-amber-400 via-rose-500 to-indigo-600 relative shrink-0 shadow-xs">
                       <img 
-                        src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=360&q=80" 
-                        alt="Thumbnail" 
-                        className="w-full h-full object-cover"
+                        src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=480&q=80" 
+                        alt="Thumbnail Preview" 
+                        className="w-full h-full object-cover mix-blend-multiply opacity-95"
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-6 h-6 rounded-full bg-white/90 flex items-center justify-center text-neutral-900">
-                          <Play className="w-2.5 h-2.5 fill-neutral-900" />
+                        <div className="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-neutral-900 shadow-md">
+                          <Play className="w-3 h-3 fill-neutral-900 translate-x-0.2" />
                         </div>
                       </div>
-                      <span className="absolute bottom-1 right-1 px-1 rounded bg-black/80 font-mono text-[8px] text-white">42:17</span>
+                      <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/85 font-mono text-[9px] font-semibold text-white leading-none">
+                        42:17
+                      </span>
                     </div>
 
-                    <div className="min-w-0 flex-1 space-y-1">
-                      <h4 className="font-semibold text-xs text-neutral-900 dark:text-white line-clamp-2">
+                    {/* Metadata & Title */}
+                    <div className="min-w-0 flex-1 space-y-1.5">
+                      <h4 className="font-bold text-xs sm:text-sm text-neutral-900 dark:text-white leading-snug line-clamp-2">
                         The Future of Artificial Intelligence | Opportunities, Risks &amp; What's Next
                       </h4>
-                      <div className="flex items-center gap-1.5 text-[10px] text-neutral-500">
-                        <span className="font-medium text-neutral-700 dark:text-neutral-300">Kurzgesagt – In a Nutshell</span>
-                        <span>•</span>
-                        <span>2.4M views</span>
+                      <p className="text-[11px] text-neutral-500 dark:text-neutral-400 font-medium">
+                        Kurzgesagt – In a Nutshell <span className="mx-1">•</span> 2.4M views
+                      </p>
+                      
+                      {/* Action Pill Buttons */}
+                      <div className="flex items-center gap-2 pt-0.5">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/70 text-[#2563EB] dark:text-blue-400 font-semibold text-[10px]">
+                          ▶ Open on YouTube
+                        </span>
+                        <span className="px-2.5 py-1 rounded-md border border-neutral-200/90 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 text-[10px] font-medium">
+                          Save
+                        </span>
+                        <span className="px-2.5 py-1 rounded-md border border-neutral-200/90 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 text-[10px] font-medium">
+                          Share
+                        </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Mini Metric Bar */}
-                  <div className="grid grid-cols-4 gap-1.5 py-1.5 px-2 rounded-lg bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 text-center">
+                  {/* 4 Metrics Row */}
+                  <div className="grid grid-cols-4 gap-2 py-2 px-3 rounded-xl bg-neutral-50/80 dark:bg-neutral-850/60 border border-neutral-200/80 dark:border-neutral-800 text-center">
                     <div>
-                      <p className="text-[8px] text-neutral-400">Language</p>
-                      <p className="text-[10px] font-semibold text-neutral-800 dark:text-neutral-200">English</p>
+                      <p className="text-[9px] text-neutral-400 font-medium">Language</p>
+                      <p className="text-xs font-bold text-neutral-800 dark:text-neutral-200 mt-0.5">English</p>
                     </div>
                     <div>
-                      <p className="text-[8px] text-neutral-400">Duration</p>
-                      <p className="text-[10px] font-semibold text-neutral-800 dark:text-neutral-200">42:17</p>
+                      <p className="text-[9px] text-neutral-400 font-medium">Duration</p>
+                      <p className="text-xs font-bold text-neutral-800 dark:text-neutral-200 mt-0.5">42:17</p>
                     </div>
                     <div>
-                      <p className="text-[8px] text-neutral-400">Views</p>
-                      <p className="text-[10px] font-semibold text-neutral-800 dark:text-neutral-200">2.4M</p>
+                      <p className="text-[9px] text-neutral-400 font-medium">Views</p>
+                      <p className="text-xs font-bold text-neutral-800 dark:text-neutral-200 mt-0.5">2.4M</p>
                     </div>
                     <div>
-                      <p className="text-[8px] text-neutral-400">Likes</p>
-                      <p className="text-[10px] font-semibold text-neutral-800 dark:text-neutral-200">125K</p>
+                      <p className="text-[9px] text-neutral-400 font-medium">Likes</p>
+                      <p className="text-xs font-bold text-neutral-800 dark:text-neutral-200 mt-0.5">125K</p>
                     </div>
                   </div>
 
-                  {/* Mini TL;DR Card */}
-                  <div className="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1">
+                  {/* Summary Tabs Row */}
+                  <div className="flex items-center gap-3.5 text-xs border-b border-neutral-200/70 dark:border-neutral-800 pb-1.5 text-neutral-500 dark:text-neutral-400 overflow-x-auto no-scrollbar font-medium">
+                    <span className="text-[#2563EB] dark:text-blue-400 font-bold border-b-2 border-[#2563EB] dark:border-blue-400 pb-1.5 -mb-1.5 shrink-0">
+                      Summary
+                    </span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Transcript</span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Timestamps</span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Key Facts</span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Quotes</span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Action Items</span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Concepts</span>
+                    <span className="shrink-0 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer">Pros &amp; Cons</span>
+                  </div>
+
+                  {/* TL;DR Highlight Card */}
+                  <div className="p-4 rounded-xl bg-blue-50/40 dark:bg-blue-950/20 border border-blue-200/70 dark:border-blue-900/40 space-y-1.5 text-left">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                        <Zap className="w-3 h-3 fill-current" />
-                        Executive TL;DR
+                      <span className="text-xs font-bold text-[#2563EB] dark:text-blue-400 flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5 fill-current" />
+                        TL;DR
                       </span>
-                      <span className="text-[9px] font-mono text-neutral-400">2 min read</span>
+                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
+                        2 min read
+                      </span>
                     </div>
-                    <p className="text-[10px] text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                      AI is rapidly transforming industries, creating new opportunities while also bringing significant risks. The briefing explores the current state of foundational models, practical implications, and key action steps.
+                    <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-relaxed font-normal">
+                      AI is rapidly transforming industries, creating new opportunities while also bringing significant risks. The video explores the current state of AI, its potential benefits and challenges, and what individuals and society need to do to prepare for the future.
                     </p>
                   </div>
                 </div>
