@@ -435,13 +435,6 @@ function AppContent() {
           setCurrentNav(nav);
         }
       }}
-      recentHistory={recentHistoryRecords}
-      activeVideoId={summary?.video?.id}
-      onSelectSummary={(sel) => {
-        setSummary(sel);
-        setCurrentNav('home');
-        setActiveTab('Summary');
-      }}
       onUpgradeClick={() => setIsPricingOpen(true)}
       onSettingsClick={() => setIsSettingsOpen(true)}
       onHeaderSummarize={(url) => handleStartSummarize({ url })}
@@ -505,17 +498,17 @@ function AppContent() {
       ) : currentNav === 'history' ? (
         /* History View */
         <div className="space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-800">
+          <div className="flex items-center justify-between pb-4 border-b border-neutral-100 dark:border-neutral-800/80">
             <div>
-              <h2 className="text-xl font-bold text-neutral-900 dark:text-white">
+              <h2 className="text-base font-semibold text-neutral-900 dark:text-white tracking-tight">
                 Summary History
               </h2>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                Browse, search, and reopen all your previously analyzed YouTube videos.
+              <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-0.5">
+                All your previously analyzed videos, searchable and replayable.
               </p>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
-              {history.length} Saved
+            <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200/80 dark:border-neutral-700">
+              {history.length} {history.length === 1 ? 'summary' : 'summaries'}
             </span>
           </div>
 
@@ -534,25 +527,25 @@ function AppContent() {
       ) : currentNav === 'saved' ? (
         /* Saved / Bookmarked View */
         <div className="space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-neutral-200 dark:border-neutral-800">
-            <div>
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-neutral-100 dark:border-neutral-800/80">
+            <div className="space-y-0.5">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h2 className="text-xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
-                  <Bookmark className="w-5 h-5 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
+                <h2 className="text-base font-semibold text-neutral-900 dark:text-white tracking-tight flex items-center gap-2">
+                  <Bookmark className="w-4 h-4 text-indigo-500 dark:text-indigo-400 fill-indigo-500 dark:fill-indigo-400" />
                   Bookmarked Summaries
                 </h2>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">
+                <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200/80 dark:border-neutral-700">
                   {recentHistoryRecords.filter((rec) => savedVideoIds.includes(rec.video.id)).length} saved
                 </span>
                 {user?.email && (
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60">
                     <Cloud className="w-3 h-3" />
-                    Synced to Firebase
+                    Synced
                   </span>
                 )}
               </div>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
-                Summaries you've bookmarked for reference. Toggling bookmarks saves them directly to your Firebase Firestore database.
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                Bookmarked summaries are synced to your account and saved to Firestore.
               </p>
             </div>
 
@@ -560,51 +553,45 @@ function AppContent() {
               <button
                 type="button"
                 onClick={() => setCurrentNav('explore')}
-                className="self-start sm:self-auto px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-750 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
+                className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/60 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-xs font-medium transition-all cursor-pointer"
               >
                 <Compass className="w-3.5 h-3.5 text-indigo-500" />
-                <span>Explore more</span>
+                Explore more
               </button>
             )}
           </div>
 
           {recentHistoryRecords.filter((rec) => savedVideoIds.includes(rec.video.id)).length === 0 ? (
-            <div className="p-10 sm:p-14 text-center bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200 dark:border-neutral-800 space-y-4">
-              <div className="w-14 h-14 mx-auto rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-sm border border-indigo-100 dark:border-indigo-900/60">
-                <Bookmark className="w-6 h-6" />
+            <div className="py-16 flex flex-col items-center gap-4 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center border border-indigo-100 dark:border-indigo-900/60">
+                <Bookmark className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
               </div>
-              <div className="max-w-md mx-auto space-y-1">
-                <h3 className="text-base font-bold text-neutral-900 dark:text-white">
-                  No Bookmarked Summaries Yet
+              <div className="text-center max-w-sm">
+                <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">
+                  No bookmarks yet
                 </h3>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                  When viewing any video summary, click the <span className="font-semibold text-neutral-700 dark:text-neutral-300">"Save"</span> bookmark button to store it in your Bookmarked Summaries and sync it to Firebase.
+                <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1 leading-relaxed">
+                  Click the bookmark icon on any summary to save it here for quick reference.
                 </p>
               </div>
-              <div className="pt-2 flex flex-wrap justify-center gap-2.5">
+              <div className="flex flex-wrap justify-center gap-2">
                 {summary && (
                   <button
                     type="button"
                     onClick={() => handleToggleSave(summary)}
-                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-2 shadow-sm transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium shadow-sm transition-all cursor-pointer"
                   >
                     <Bookmark className="w-3.5 h-3.5 fill-white" />
-                    <span>Bookmark Active Summary</span>
+                    Bookmark active summary
                   </button>
                 )}
                 <button
                   type="button"
-                  onClick={() => setCurrentNav('home')}
-                  className="px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-xs font-semibold transition-all cursor-pointer"
-                >
-                  Go to Active Summary
-                </button>
-                <button
-                  type="button"
                   onClick={() => setCurrentNav('explore')}
-                  className="px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-xs font-semibold transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-xs font-medium transition-all cursor-pointer"
                 >
-                  Explore Trending Topics
+                  <Compass className="w-3.5 h-3.5" />
+                  Explore trending
                 </button>
               </div>
             </div>

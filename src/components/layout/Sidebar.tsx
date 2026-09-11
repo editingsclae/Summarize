@@ -13,17 +13,13 @@ import {
   Play,
   X
 } from 'lucide-react';
-import { RecentSummaries } from '../history/RecentSummaries';
-import { SavedSummaryRecord, StructuredSummary } from '../../types/summary';
+
 
 export type NavItem = 'home' | 'new' | 'history' | 'saved' | 'explore' | 'settings';
 
 interface SidebarProps {
   currentNav: NavItem;
   onNavigate: (nav: NavItem) => void;
-  recentHistory: SavedSummaryRecord[];
-  activeVideoId?: string;
-  onSelectSummary: (summary: StructuredSummary) => void;
   onUpgradeClick: () => void;
   onSettingsClick: () => void;
   onCloseMobile?: () => void;
@@ -37,9 +33,6 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
   currentNav,
   onNavigate,
-  recentHistory,
-  activeVideoId,
-  onSelectSummary,
   onUpgradeClick,
   onSettingsClick,
   onCloseMobile,
@@ -126,18 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           })}
         </nav>
 
-        {/* Divider */}
-        <div className="border-t border-neutral-200/80 dark:border-neutral-800/80 my-1" />
 
-        {/* Recent Summaries List */}
-        <RecentSummaries
-          history={recentHistory}
-          activeVideoId={activeVideoId}
-          onSelectSummary={onSelectSummary}
-          onViewAll={() => onNavigate('history')}
-        />
-
-        {/* Upgrade to Pro Card */}
         <div className="p-3.5 rounded-xl bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 text-left space-y-2.5">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar, NavItem } from './Sidebar';
 import { Header } from './Header';
-import { SavedSummaryRecord, StructuredSummary } from '../../types/summary';
+
+
 import { Sparkles, X, ChevronRight } from 'lucide-react';
 
 interface AppLayoutProps {
   currentNav: NavItem;
   onNavigate: (nav: NavItem) => void;
-  recentHistory: SavedSummaryRecord[];
-  activeVideoId?: string;
-  onSelectSummary: (summary: StructuredSummary) => void;
   onUpgradeClick: () => void;
   onSettingsClick: () => void;
   rightSidebar?: React.ReactNode;
@@ -20,9 +18,6 @@ interface AppLayoutProps {
 export const AppLayout: React.FC<AppLayoutProps> = ({
   currentNav,
   onNavigate,
-  recentHistory,
-  activeVideoId,
-  onSelectSummary,
   onUpgradeClick,
   onSettingsClick,
   rightSidebar,
@@ -77,12 +72,6 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           currentNav={currentNav}
           onNavigate={(nav) => {
             onNavigate(nav);
-            setMobileSidebarOpen(false);
-          }}
-          recentHistory={recentHistory}
-          activeVideoId={activeVideoId}
-          onSelectSummary={(summary) => {
-            onSelectSummary(summary);
             setMobileSidebarOpen(false);
           }}
           onUpgradeClick={() => {
