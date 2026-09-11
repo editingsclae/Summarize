@@ -27,14 +27,14 @@ export const ActionItems: React.FC<ActionItemsProps> = ({ items }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-5 shadow-xs">
+    <div className="bg-white dark:bg-[#0D1321] rounded-xl border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 shadow-2xs">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3.5">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-200/60 dark:border-emerald-900/60">
+            <CheckCircle2 className="w-3 h-3" />
           </div>
-          <h3 className="font-bold text-neutral-900 dark:text-white text-sm">
+          <h3 className="font-semibold text-neutral-900 dark:text-white text-xs sm:text-sm">
             Action Items
           </h3>
         </div>
@@ -43,7 +43,7 @@ export const ActionItems: React.FC<ActionItemsProps> = ({ items }) => {
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
-            className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-0.5 cursor-pointer"
+            className="text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white flex items-center gap-0.5 cursor-pointer transition-colors"
           >
             <span>{showAll ? 'Show less' : 'View all'}</span>
             <ChevronRight className="w-3 h-3" />
@@ -52,17 +52,17 @@ export const ActionItems: React.FC<ActionItemsProps> = ({ items }) => {
       </div>
 
       {/* Action Items List */}
-      <div className="space-y-2.5">
+      <div className="space-y-2">
         {displayItems.map((item, idx) => {
           const isDone = !!completedIndices[idx];
           return (
             <div
               key={idx}
               onClick={() => toggleComplete(idx)}
-              className={`p-3 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer ${
+              className={`p-2.5 rounded-lg border transition-all flex items-start gap-2.5 cursor-pointer ${
                 isDone
-                  ? 'bg-emerald-50/40 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/40 opacity-70'
-                  : 'bg-neutral-50/70 dark:bg-neutral-850/40 border-neutral-200/60 dark:border-neutral-800/60 hover:border-indigo-200 dark:hover:border-indigo-800/60'
+                  ? 'bg-emerald-50/40 dark:bg-emerald-950/20 border-emerald-200/70 dark:border-emerald-900/40 opacity-70'
+                  : 'bg-neutral-50/70 dark:bg-neutral-850/40 border-neutral-200/60 dark:border-neutral-800/60 hover:bg-white dark:hover:bg-neutral-800/60'
               }`}
             >
               <div

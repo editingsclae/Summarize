@@ -61,15 +61,15 @@ export const DetailedSummary: React.FC<DetailedSummaryProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-6 shadow-xs hover:border-indigo-200/60 dark:hover:border-indigo-800/40 transition-all">
+    <div className="bg-white dark:bg-[#0D1321] rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
       {/* Card Header */}
       <div className="flex items-center justify-between gap-3 pb-5 mb-5 border-b border-neutral-100 dark:border-neutral-800/70">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-            <BookOpen className="w-4 h-4" />
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+            <BookOpen className="w-3.5 h-3.5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-neutral-900 dark:text-white tracking-tight">
+            <h2 className="text-sm font-bold text-neutral-900 dark:text-white tracking-tight">
               Detailed Summary
             </h2>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -83,14 +83,14 @@ export const DetailedSummary: React.FC<DetailedSummaryProps> = ({
             <button
               type="button"
               onClick={toggleAll}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-300 hover:text-indigo-600 hover:border-indigo-200 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-300 hover:text-indigo-600 hover:border-indigo-200 transition-colors"
             >
               <ListCollapse className="w-3.5 h-3.5" />
               <span>{allExpanded ? 'Collapse All' : 'Expand All'}</span>
             </button>
           )}
 
-          <span className="px-3 py-1.5 rounded-xl bg-neutral-50 dark:bg-neutral-800/70 border border-neutral-200/70 dark:border-neutral-700/60 text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          <span className="px-2.5 py-1 rounded-md bg-neutral-50 dark:bg-neutral-800/70 border border-neutral-200/70 dark:border-neutral-700/60 text-xs font-semibold text-neutral-600 dark:text-neutral-300">
             {sections.length} Chapters
           </span>
         </div>
@@ -108,7 +108,7 @@ export const DetailedSummary: React.FC<DetailedSummaryProps> = ({
           return (
             <div
               key={idx}
-              className="flex items-start gap-4 group p-3 sm:p-4 rounded-2xl hover:bg-neutral-50/70 dark:hover:bg-neutral-800/40 border border-transparent hover:border-neutral-200/60 dark:hover:border-neutral-800/60 transition-all"
+              className="flex items-start gap-4 group p-3 sm:p-4 rounded-xl hover:bg-neutral-50/70 dark:hover:bg-neutral-800/40 border border-transparent hover:border-neutral-200/60 dark:hover:border-neutral-800/60 transition-all"
             >
               {/* Timeline marker / number */}
               <div className="flex flex-col items-center shrink-0">

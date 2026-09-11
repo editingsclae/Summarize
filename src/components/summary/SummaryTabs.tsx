@@ -107,18 +107,18 @@ export const SummaryTabs: React.FC<SummaryTabsProps> = ({
         onClick={() => onTabChange(tab)}
         className={`relative py-2.5 px-1 sm:px-2 text-xs sm:text-sm font-medium transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5 group ${
           isActive
-            ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/60 dark:bg-indigo-950/25'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-850/40'
+            ? 'text-indigo-600 dark:text-indigo-400 font-semibold bg-indigo-50/80 dark:bg-indigo-950/40'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 hover:bg-neutral-50/80 dark:hover:bg-neutral-850/40'
         }`}
       >
         {renderTabIcon(tab)}
         <span className="truncate">{tab}</span>
         {count > 0 && (
           <span
-            className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold shrink-0 ${
+            className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-medium shrink-0 ${
               isActive
                 ? 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300'
-                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 group-hover:bg-neutral-200 dark:group-hover:bg-neutral-700'
+                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 group-hover:bg-neutral-200/70 dark:group-hover:bg-neutral-700'
             }`}
           >
             {count}
@@ -129,7 +129,7 @@ export const SummaryTabs: React.FC<SummaryTabsProps> = ({
   };
 
   return (
-    <div className="w-full bg-white dark:bg-[#131B2E] rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 shadow-2xs overflow-hidden">
+    <div className="w-full bg-white dark:bg-[#0D1321] rounded-xl border border-neutral-200/80 dark:border-neutral-800 shadow-2xs overflow-hidden">
       <div className="w-full overflow-x-auto no-scrollbar">
         <div className="min-w-[580px] sm:min-w-0 flex flex-col divide-y divide-neutral-200/70 dark:divide-neutral-800/80">
           {/* Row 1: Top 5 Tabs */}

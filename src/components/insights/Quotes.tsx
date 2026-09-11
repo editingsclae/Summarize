@@ -27,14 +27,14 @@ export const Quotes: React.FC<QuotesProps> = ({ quotes }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-5 shadow-xs">
+    <div className="bg-white dark:bg-[#0D1321] rounded-xl border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 shadow-2xs">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3.5">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
-            <Quote className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 border border-purple-200/60 dark:border-purple-900/60">
+            <Quote className="w-3 h-3" />
           </div>
-          <h3 className="font-bold text-neutral-900 dark:text-white text-sm">
+          <h3 className="font-semibold text-neutral-900 dark:text-white text-xs sm:text-sm">
             Important Quotes
           </h3>
         </div>
@@ -43,7 +43,7 @@ export const Quotes: React.FC<QuotesProps> = ({ quotes }) => {
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
-            className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-0.5 cursor-pointer"
+            className="text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white flex items-center gap-0.5 cursor-pointer transition-colors"
           >
             <span>{showAll ? 'Show less' : 'View all'}</span>
             <ChevronRight className="w-3 h-3" />
@@ -52,11 +52,11 @@ export const Quotes: React.FC<QuotesProps> = ({ quotes }) => {
       </div>
 
       {/* Quote Items */}
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {displayQuotes.map((q, idx) => (
           <div
             key={idx}
-            className="p-3.5 rounded-2xl bg-neutral-50/70 dark:bg-neutral-850/40 border border-neutral-200/60 dark:border-neutral-800/60 relative group"
+            className="p-3 rounded-lg bg-neutral-50/70 dark:bg-neutral-850/40 border border-neutral-200/60 dark:border-neutral-800/60 relative group"
           >
             <Quote className="w-5 h-5 text-indigo-300 dark:text-indigo-700/60 mb-1" />
             <p className="text-xs italic text-neutral-700 dark:text-neutral-300 leading-relaxed font-serif">

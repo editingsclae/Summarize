@@ -75,10 +75,10 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-5 sm:p-6 shadow-xs transition-colors">
-      <div className="flex flex-col lg:flex-row gap-6 items-start">
+    <div className="bg-white dark:bg-[#0D1321] rounded-2xl border border-neutral-200/80 dark:border-neutral-800 p-5 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none transition-colors">
+      <div className="flex flex-col lg:flex-row gap-5 lg:gap-6 items-start">
         {/* Left: Thumbnail with Play Button Overlay & Duration */}
-        <div className="w-full lg:w-[320px] xl:w-[360px] shrink-0 aspect-video rounded-2xl overflow-hidden bg-neutral-900 relative group shadow-sm border border-neutral-200/60 dark:border-neutral-800">
+        <div className="w-full lg:w-[320px] xl:w-[350px] shrink-0 aspect-video rounded-xl overflow-hidden bg-neutral-900 relative group shadow-xs border border-neutral-200/60 dark:border-neutral-800">
           {isPlayingInline ? (
             <div className="relative w-full h-full">
               <iframe
@@ -102,30 +102,30 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                 src={video.thumbnail}
                 alt={video.title}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
                 }}
               />
               {/* Play Button Overlay */}
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition-all group-hover:bg-black/40">
+              <div className="absolute inset-0 bg-black/25 flex items-center justify-center transition-all group-hover:bg-black/35">
                 <button
                   type="button"
                   onClick={() => setIsPlayingInline(true)}
-                  className="w-14 h-14 rounded-full bg-white/95 dark:bg-white text-indigo-600 flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all cursor-pointer group-hover:shadow-indigo-500/30"
+                  className="w-11 h-11 rounded-full bg-white/95 dark:bg-white text-neutral-900 flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
                   title="Play video"
                 >
-                  <Play className="w-6 h-6 ml-1 fill-indigo-600 text-indigo-600" />
+                  <Play className="w-4 h-4 ml-0.5 fill-neutral-900 text-neutral-900" />
                 </button>
               </div>
               {/* Duration or Live Tag */}
               {isOngoingLive ? (
-                <span className="absolute bottom-3 right-3 px-2.5 py-0.5 rounded-md bg-red-600 text-white text-xs font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-md">
+                <span className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-red-600 text-white text-[10px] font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
                   LIVE
                 </span>
               ) : durationDisplay && durationDisplay !== 'Unavailable' ? (
-                <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-xs text-white text-xs font-mono font-medium tracking-tight">
+                <span className="absolute bottom-2.5 right-2.5 px-1.5 py-0.5 rounded bg-black/85 backdrop-blur-xs text-white text-[10px] font-mono font-medium leading-none">
                   {durationDisplay}
                 </span>
               ) : null}
@@ -137,32 +137,32 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
         <div className="flex-1 min-w-0 flex flex-col justify-between self-stretch">
           <div>
             {/* Title & Live Badge */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <h1 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white leading-tight tracking-tight">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-lg sm:text-xl font-bold text-neutral-950 dark:text-white leading-snug tracking-tight">
                 {video.title}
               </h1>
               {isOngoingLive && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs border border-red-500/30 shrink-0">
-                  <span className="w-2 h-2 rounded-full bg-red-600 dark:bg-red-500 inline-block animate-pulse" />
-                  LIVE STREAM
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 font-semibold text-[11px] border border-red-500/30 shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-red-500 inline-block animate-pulse" />
+                  LIVE
                 </span>
               )}
             </div>
 
             {/* Channel Info Row */}
-            <div className="mt-3 flex flex-wrap items-center gap-2.5 text-xs text-neutral-500 dark:text-neutral-400">
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
               {video.channelAvatar ? (
                 <img
                   src={video.channelAvatar}
                   alt={video.channel}
                   referrerPolicy="no-referrer"
-                  className="w-6 h-6 rounded-full object-cover border border-neutral-200 dark:border-neutral-700 shadow-2xs shrink-0"
+                  className="w-5 h-5 rounded-full object-cover border border-neutral-200 dark:border-neutral-700 shrink-0"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
               ) : (
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-[11px] shrink-0 shadow-2xs">
+                <div className="w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-[10px] shrink-0">
                   {video.channel ? video.channel.charAt(0).toUpperCase() : 'Y'}
                 </div>
               )}
@@ -175,18 +175,18 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
               {isOngoingLive && (
                 <>
                   <span>•</span>
-                  <span className="font-semibold text-red-600 dark:text-red-400">{viewsDisplay}</span>
+                  <span className="font-medium text-red-600 dark:text-red-400">{viewsDisplay}</span>
                 </>
               )}
             </div>
 
-            {/* Action Buttons Row - Guaranteed single line next to each other */}
-            <div className="mt-5 flex items-center gap-2 sm:gap-2.5 flex-nowrap overflow-x-auto no-scrollbar py-0.5">
+            {/* Action Buttons Row */}
+            <div className="mt-4 flex items-center gap-2 flex-nowrap overflow-x-auto no-scrollbar py-0.5">
               <a
                 href={video.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-98 text-white font-medium text-xs sm:text-sm shadow-sm transition-all shrink-0 whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-medium text-xs shadow-2xs transition-all shrink-0 whitespace-nowrap"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
                 <span>Open on YouTube</span>
@@ -196,10 +196,10 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                 type="button"
                 onClick={onSave}
                 disabled={isSaving}
-                className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-medium transition-all cursor-pointer shrink-0 whitespace-nowrap ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all cursor-pointer shrink-0 whitespace-nowrap active:scale-[0.98] ${
                   isSaved
                     ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400'
-                    : 'border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-750'
+                    : 'border-neutral-200/90 dark:border-neutral-750 bg-white dark:bg-neutral-850 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800'
                 } ${isSaving ? 'opacity-70 cursor-wait' : ''}`}
                 title={isSaved ? 'Remove from Bookmarked Summaries' : 'Save to Bookmarked Summaries (Firebase)'}
               >
@@ -216,7 +216,7 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                     setShowExportMenu(!showExportMenu);
                     setShowMoreMenu(false);
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-750 text-xs sm:text-sm font-medium transition-all cursor-pointer whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-200/90 dark:border-neutral-750 bg-white dark:bg-neutral-850 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-[0.98]"
                   title="Export summary to PDF or Markdown"
                 >
                   <Download className="w-3.5 h-3.5 text-indigo-500" />
@@ -225,7 +225,7 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                 </button>
 
                 {showExportMenu && (
-                  <div className="absolute left-0 sm:right-0 sm:left-auto mt-2 w-56 rounded-2xl bg-white dark:bg-[#131B2E] border border-neutral-200 dark:border-neutral-700 shadow-2xl py-1.5 z-30 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="absolute left-0 sm:right-0 sm:left-auto mt-2 w-56 rounded-xl bg-white dark:bg-[#0D1321] border border-neutral-200/80 dark:border-neutral-800 shadow-[0_8px_30px_rgba(0,0,0,0.08)] py-1.5 z-30 animate-in fade-in zoom-in-95 duration-150">
                     <button
                       type="button"
                       id="card-export-pdf-btn"
@@ -233,10 +233,10 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                         setShowExportMenu(false);
                         if (onExportPdf) onExportPdf();
                       }}
-                      className="w-full px-3.5 py-2.5 text-left text-xs font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/80 flex items-center gap-2.5 transition-colors cursor-pointer"
+                      className="w-full px-3.5 py-2 text-left text-xs font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2.5 transition-colors cursor-pointer"
                     >
-                      <div className="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-500 dark:text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/20">
-                        <FileText className="w-4 h-4" />
+                      <div className="w-7 h-7 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 border border-rose-200/60 dark:border-rose-900/60">
+                        <FileText className="w-3.5 h-3.5" />
                       </div>
                       <div>
                         <div className="font-semibold text-neutral-900 dark:text-white">Executive PDF</div>
@@ -250,10 +250,10 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                         setShowExportMenu(false);
                         if (onExportMarkdown) onExportMarkdown();
                       }}
-                      className="w-full px-3.5 py-2.5 text-left text-xs font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/80 flex items-center gap-2.5 transition-colors cursor-pointer"
+                      className="w-full px-3.5 py-2 text-left text-xs font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2.5 transition-colors cursor-pointer"
                     >
-                      <div className="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/20">
-                        <FileDown className="w-4 h-4" />
+                      <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-200/60 dark:border-indigo-900/60">
+                        <FileDown className="w-3.5 h-3.5" />
                       </div>
                       <div>
                         <div className="font-semibold text-neutral-900 dark:text-white">Markdown Notes</div>
@@ -268,9 +268,9 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
                         setShowExportMenu(false);
                         window.print();
                       }}
-                      className="w-full px-3.5 py-2 text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800/80 flex items-center gap-2.5 transition-colors cursor-pointer"
+                      className="w-full px-3.5 py-1.5 text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2.5 transition-colors cursor-pointer"
                     >
-                      <Printer className="w-4 h-4 text-neutral-400 ml-1" />
+                      <Printer className="w-3.5 h-3.5 text-neutral-400 ml-1" />
                       <span className="ml-0.5">Print Briefing</span>
                     </button>
                   </div>
@@ -282,15 +282,15 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
       </div>
 
       {/* Professional Executive Metric Bar (Language, Duration, Views, Likes) */}
-      <div className="mt-6 pt-5 border-t border-neutral-100 dark:border-neutral-800/80">
-        <div className="grid grid-cols-2 md:grid-cols-4 rounded-2xl bg-neutral-50/60 dark:bg-neutral-900/30 border border-neutral-200/80 dark:border-neutral-800/80 divide-y md:divide-y-0 md:divide-x divide-neutral-200/70 dark:divide-neutral-800/80 overflow-hidden">
+      <div className="mt-5 pt-4 border-t border-neutral-100 dark:border-neutral-800/80">
+        <div className="grid grid-cols-2 md:grid-cols-4 rounded-xl bg-neutral-50/70 dark:bg-neutral-900/40 border border-neutral-200/80 dark:border-neutral-800 divide-y md:divide-y-0 md:divide-x divide-neutral-200/70 dark:divide-neutral-800/80 overflow-hidden">
           {/* 1. Language */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
-            <div className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
-              <Globe className="w-4 h-4" />
+          <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
+            <div className="w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
+              <Globe className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0">
-              <span className="block text-[10px] font-semibold text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Language</span>
+              <span className="block text-[10px] font-medium text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Language</span>
               <span className="block text-xs sm:text-sm font-semibold text-neutral-900 dark:text-neutral-100 truncate" title={formatLanguageName(video.language || language)}>
                 {formatLanguageName(video.language || language)}
               </span>
@@ -298,12 +298,12 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
           </div>
 
           {/* 2. Duration */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
-            <div className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
-              <Clock className="w-4 h-4" />
+          <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
+            <div className="w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
+              <Clock className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0">
-              <span className="block text-[10px] font-semibold text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Duration</span>
+              <span className="block text-[10px] font-medium text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Duration</span>
               <span className="block text-xs sm:text-sm font-semibold font-mono text-neutral-900 dark:text-neutral-100 truncate" title={durationDisplay}>
                 {durationDisplay}
               </span>
@@ -311,12 +311,12 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
           </div>
 
           {/* 3. Views */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
-            <div className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
-              <Eye className="w-4 h-4" />
+          <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
+            <div className="w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
+              <Eye className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0">
-              <span className="block text-[10px] font-semibold text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Views</span>
+              <span className="block text-[10px] font-medium text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Views</span>
               <span className="block text-xs sm:text-sm font-semibold text-neutral-900 dark:text-neutral-100 truncate" title={cleanViews}>
                 {cleanViews}
               </span>
@@ -324,12 +324,12 @@ export const VideoInfoCard: React.FC<VideoInfoCardProps> = ({
           </div>
 
           {/* 4. Likes */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
-            <div className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
-              <ThumbsUp className="w-4 h-4" />
+          <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex items-center gap-3 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 transition-colors">
+            <div className="w-7 h-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 flex items-center justify-center shrink-0 border border-neutral-200/60 dark:border-neutral-700/60">
+              <ThumbsUp className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0">
-              <span className="block text-[10px] font-semibold text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Likes</span>
+              <span className="block text-[10px] font-medium text-neutral-400 dark:text-neutral-500 tracking-wider uppercase">Likes</span>
               <span className="block text-xs sm:text-sm font-semibold text-neutral-900 dark:text-neutral-100 truncate" title={likesDisplay}>
                 {likesDisplay}
               </span>

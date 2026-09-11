@@ -66,13 +66,13 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="h-16 sm:h-18 px-4 sm:px-6 bg-white dark:bg-[#0D1321] border-b border-neutral-200/80 dark:border-neutral-800/80 sticky top-0 z-30 flex items-center justify-between gap-4">
+    <header className="h-16 px-4 sm:px-6 bg-white/80 dark:bg-[#090D16]/80 backdrop-blur-md border-b border-neutral-200/80 dark:border-neutral-800/80 sticky top-0 z-30 flex items-center justify-between gap-4">
       {/* Left / Hamburger for Mobile */}
       <div className="flex items-center gap-3 lg:hidden">
         <button
           type="button"
           onClick={onOpenMobileSidebar}
-          className="p-2 rounded-xl text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+          className="p-1.5 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
           title="Open navigation"
         >
           <Menu className="w-5 h-5" />
@@ -83,7 +83,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="flex-1 max-w-xl hidden sm:block">
         <form onSubmit={handleHeaderSubmit} className="relative flex items-center">
           <div className="relative flex-1">
-            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none flex items-center">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none flex items-center">
               <Link2 className="w-4 h-4" />
             </div>
             <input
@@ -91,29 +91,29 @@ export const Header: React.FC<HeaderProps> = ({
               value={headerUrl}
               onChange={(e) => setHeaderUrl(e.target.value)}
               placeholder="Paste a YouTube URL here..."
-              className="w-full pl-10 pr-3 py-2 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-xs sm:text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white dark:focus:bg-[#0D1321] transition-all"
+              className="w-full pl-9 pr-3 py-1.5 rounded-lg bg-neutral-50/60 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-750 text-xs sm:text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:border-indigo-500/80 focus:ring-2 focus:ring-indigo-500/20 transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={!headerUrl.trim()}
-            className="ml-2.5 px-4 py-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 disabled:opacity-50 text-white font-semibold text-xs sm:text-sm flex items-center gap-1.5 shadow-sm transition-all cursor-pointer shrink-0"
+            className="ml-2 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-medium text-xs flex items-center gap-1.5 shadow-2xs active:scale-[0.98] transition-all cursor-pointer shrink-0"
           >
-            <Sparkles className="w-3.5 h-3.5 fill-white" />
+            <Sparkles className="w-3.5 h-3.5 fill-current" />
             <span>Summarize Video</span>
           </button>
         </form>
       </div>
 
       {/* Right User & Theme Controls */}
-      <div className="flex items-center gap-2 sm:gap-4 shrink-0 ml-auto">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
         {/* Mobile Insights Button */}
         {hasRightSidebar && (
           <button
             type="button"
             onClick={onOpenMobileInsights}
-            className="xl:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 text-xs font-semibold cursor-pointer"
+            className="xl:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-800/80 text-xs font-semibold cursor-pointer"
             title="Open video insights drawer"
           >
             <Sparkles className="w-3.5 h-3.5 fill-current shrink-0" />
@@ -125,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           type="button"
           onClick={() => setDarkMode(!isDark)}
-          className="flex items-center justify-center w-9 h-9 rounded-xl border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer shadow-2xs"
+          className="p-2 rounded-lg text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-colors cursor-pointer border border-transparent hover:border-neutral-200/60 dark:hover:border-neutral-700/60"
           title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         >
@@ -141,18 +141,18 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2 rounded-xl text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors relative cursor-pointer"
+            className="p-2 rounded-lg text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-colors relative cursor-pointer"
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-[#0D1321]" />
+            <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-rose-500 ring-2 ring-white dark:ring-[#090D16]" />
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-[#131B2E] border border-neutral-200 dark:border-neutral-800 shadow-xl p-3 z-30">
-              <h4 className="text-xs font-bold text-neutral-900 dark:text-white mb-2">Notifications</h4>
-              <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                Welcome to VidBrief.ai! Paste any YouTube video to generate instant structured summaries.
+            <div className="absolute right-0 mt-2 w-64 rounded-xl bg-white dark:bg-[#0D1321] border border-neutral-200/80 dark:border-neutral-800 shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-3.5 z-30 animate-in fade-in zoom-in-95 duration-150">
+              <h4 className="text-xs font-semibold text-neutral-900 dark:text-white mb-1.5">Notifications</h4>
+              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                Welcome to VidBrief.ai! Paste any YouTube video URL to generate instant structured insights.
               </p>
             </div>
           )}
@@ -163,25 +163,25 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-2 p-1 rounded-2xl hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-colors cursor-pointer"
+            className="flex items-center gap-2 p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-colors cursor-pointer"
           >
             <img
               src={userPhoto}
               alt={userName}
-              className="w-8 h-8 rounded-full object-cover border border-neutral-200 dark:border-neutral-700"
+              className="w-7 h-7 rounded-full object-cover border border-neutral-200 dark:border-neutral-700"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
               }}
             />
-            <span className="hidden sm:inline text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-200">
+            <span className="hidden sm:inline text-xs font-semibold text-neutral-800 dark:text-neutral-200">
               {userName}
             </span>
           </button>
 
           {showUserMenu && (
-            <div className="absolute right-0 mt-2 w-52 rounded-2xl bg-white dark:bg-[#131B2E] border border-neutral-200 dark:border-neutral-800 shadow-xl py-2 z-30">
-              <div className="px-3.5 py-2 border-b border-neutral-100 dark:border-neutral-800">
-                <p className="text-xs font-bold text-neutral-900 dark:text-white truncate">{userName}</p>
+            <div className="absolute right-0 mt-2 w-52 rounded-xl bg-white dark:bg-[#0D1321] border border-neutral-200/80 dark:border-neutral-800 shadow-[0_8px_30px_rgba(0,0,0,0.08)] py-1.5 z-30 animate-in fade-in zoom-in-95 duration-150">
+              <div className="px-3 py-2 border-b border-neutral-100 dark:border-neutral-800">
+                <p className="text-xs font-semibold text-neutral-900 dark:text-white truncate">{userName}</p>
                 <p className="text-[10px] text-neutral-400 truncate">{user?.email || 'firas@example.com'}</p>
               </div>
 
@@ -193,7 +193,7 @@ export const Header: React.FC<HeaderProps> = ({
                       setShowUserMenu(false);
                       onOpenPricing();
                     }}
-                    className="w-full px-3.5 py-2 text-left text-xs text-amber-600 dark:text-amber-400 font-semibold hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2"
+                    className="w-full px-3 py-1.5 text-left text-xs text-amber-600 dark:text-amber-400 font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2"
                   >
                     <Crown className="w-3.5 h-3.5" />
                     <span>Upgrade to Pro</span>
@@ -207,7 +207,7 @@ export const Header: React.FC<HeaderProps> = ({
                       setShowUserMenu(false);
                       onOpenSettings();
                     }}
-                    className="w-full px-3.5 py-2 text-left text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2"
+                    className="w-full px-3 py-1.5 text-left text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800/60 flex items-center gap-2"
                   >
                     <SettingsIcon className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Settings</span>
@@ -220,7 +220,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setShowUserMenu(false);
                     signOut();
                   }}
-                  className="w-full px-3.5 py-2 text-left text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 flex items-center gap-2"
+                  className="w-full px-3 py-1.5 text-left text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 flex items-center gap-2"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Log Out</span>

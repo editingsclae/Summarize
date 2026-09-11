@@ -88,7 +88,7 @@ export const ProcessingState: React.FC<ProcessingStateProps> = ({
   const progressPercent = Math.min(Math.round((currentStage / stages.length) * 100), 96);
 
   return (
-    <div className="w-full max-w-2xl mx-auto my-12 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 sm:p-8 shadow-xl shadow-neutral-950/5">
+    <div className="w-full max-w-2xl mx-auto my-12 bg-white dark:bg-[#0D1321] rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 p-6 sm:p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
       {/* Header with animated icon */}
       <div className="flex items-center justify-between pb-6 border-b border-neutral-100 dark:border-neutral-800">
         <div className="flex items-center gap-3">

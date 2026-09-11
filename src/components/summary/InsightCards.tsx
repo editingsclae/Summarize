@@ -51,9 +51,9 @@ export const InsightCards: React.FC<InsightCardsProps> = ({ summary }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
       {/* 1. KEY IDEA - Purple */}
-      <div className="p-4 rounded-2xl bg-purple-50/70 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900/40 flex flex-col justify-between min-h-[110px]">
+      <div className="p-3.5 rounded-xl bg-purple-50/60 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900/40 flex flex-col justify-between min-h-[105px]">
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-[10px] font-bold tracking-wide uppercase">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-100/80 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-[10px] font-bold tracking-wide uppercase">
             <Lightbulb className="w-2.5 h-2.5" />
             KEY IDEA
           </span>
@@ -64,9 +64,9 @@ export const InsightCards: React.FC<InsightCardsProps> = ({ summary }) => {
       </div>
 
       {/* 2. RECOMMENDATION - Green */}
-      <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 flex flex-col justify-between min-h-[110px]">
+      <div className="p-3.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 flex flex-col justify-between min-h-[105px]">
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold tracking-wide uppercase">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100/80 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold tracking-wide uppercase">
             <CheckCircle2 className="w-2.5 h-2.5" />
             RECOMMENDATION
           </span>
@@ -77,9 +77,9 @@ export const InsightCards: React.FC<InsightCardsProps> = ({ summary }) => {
       </div>
 
       {/* 3. IMPORTANT - Amber/Warm */}
-      <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40 flex flex-col justify-between min-h-[110px]">
+      <div className="p-3.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40 flex flex-col justify-between min-h-[105px]">
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-[10px] font-bold tracking-wide uppercase">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100/80 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-[10px] font-bold tracking-wide uppercase">
             <AlertTriangle className="w-2.5 h-2.5" />
             IMPORTANT
           </span>
@@ -90,9 +90,9 @@ export const InsightCards: React.FC<InsightCardsProps> = ({ summary }) => {
       </div>
 
       {/* 4. FACT - Blue */}
-      <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 flex flex-col justify-between min-h-[110px]">
+      <div className="p-3.5 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 flex flex-col justify-between min-h-[105px]">
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] font-bold tracking-wide uppercase">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-100/80 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] font-bold tracking-wide uppercase">
             <Info className="w-2.5 h-2.5" />
             FACT
           </span>

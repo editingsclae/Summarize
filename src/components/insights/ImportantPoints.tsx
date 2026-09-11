@@ -62,14 +62,14 @@ export const ImportantPoints: React.FC<ImportantPointsProps> = ({ points, videoI
   };
 
   return (
-    <div className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 p-5 shadow-xs">
+    <div className="bg-white dark:bg-[#0D1321] rounded-xl border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 shadow-2xs">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3.5">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
-            <AlertTriangle className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 border border-rose-200/60 dark:border-rose-900/60">
+            <AlertTriangle className="w-3 h-3" />
           </div>
-          <h3 className="font-bold text-neutral-900 dark:text-white text-sm">
+          <h3 className="font-semibold text-neutral-900 dark:text-white text-xs sm:text-sm">
             Important Points
           </h3>
         </div>
@@ -78,7 +78,7 @@ export const ImportantPoints: React.FC<ImportantPointsProps> = ({ points, videoI
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
-            className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-0.5 cursor-pointer"
+            className="text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white flex items-center gap-0.5 cursor-pointer transition-colors"
           >
             <span>{showAll ? 'Show less' : 'View all'}</span>
             <ChevronRight className="w-3 h-3" />
@@ -87,7 +87,7 @@ export const ImportantPoints: React.FC<ImportantPointsProps> = ({ points, videoI
       </div>
 
       {/* Points Cards */}
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {displayPoints.map((pt, idx) => {
           const style = getStyleForType(pt.type);
           const time = formatTimestamp(pt.timestamp, idx);
@@ -95,7 +95,7 @@ export const ImportantPoints: React.FC<ImportantPointsProps> = ({ points, videoI
           return (
             <div
               key={idx}
-              className={`p-3.5 rounded-2xl bg-neutral-50/70 dark:bg-neutral-850/40 border border-neutral-200/60 dark:border-neutral-800/60 border-l-3 ${style.borderAccent} transition-all hover:bg-white dark:hover:bg-neutral-800/60`}
+              className={`p-3 rounded-lg bg-neutral-50/70 dark:bg-neutral-850/40 border border-neutral-200/60 dark:border-neutral-800/60 border-l-2 ${style.borderAccent} transition-all hover:bg-white dark:hover:bg-neutral-800/60`}
             >
               <div className="flex items-center justify-between mb-1.5">
                 <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border ${style.badgeBg}`}>
