@@ -29,6 +29,7 @@ import { LandingPage } from './components/landing/LandingPage';
 import { VideoInput } from './components/VideoInput';
 import { NewSummaryView } from './components/summary/NewSummaryView';
 import { NewSummaryRightSidebar } from './components/layout/NewSummaryRightSidebar';
+import { ExploreView } from './components/explore/ExploreView';
 
 import { StructuredSummary, SummaryLength, SummaryStyle, OutputLanguage } from './types/summary';
 import { VideoMetadata } from './types/video';
@@ -623,67 +624,13 @@ function AppContent() {
         </div>
       ) : currentNav === 'explore' ? (
         /* Explore View */
-        <div className="space-y-6">
-          <div className="pb-3 border-b border-neutral-200 dark:border-neutral-800">
-            <h2 className="text-xl font-bold text-neutral-900 dark:text-white">
-              Explore Trending Topics
-            </h2>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              Discover popular insights and summaries from curated YouTube talks and tutorials.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {SAMPLE_VIDEOS.map((vid) => (
-              <div
-                key={vid.id}
-                className="bg-white dark:bg-[#131B2E] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 overflow-hidden shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800/80 transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="aspect-video bg-neutral-900 relative overflow-hidden">
-                    <img
-                      src={vid.thumbnail}
-                      alt={vid.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 text-white text-[11px] font-mono">
-                      {vid.duration}
-                    </span>
-                  </div>
-
-                  <div className="p-5">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-wider mb-2">
-                      {vid.category}
-                    </span>
-                    <h3 className="text-sm font-bold text-neutral-900 dark:text-white line-clamp-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                      {vid.title}
-                    </h3>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
-                      {vid.channel}
-                    </p>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-300 mt-3 line-clamp-2">
-                      {vid.summary.tldr}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-5 pt-0">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSummary(vid.summary);
-                      setCurrentNav('home');
-                      setActiveTab('Summary');
-                    }}
-                    className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                  >
-                    <span>View Full Briefing</span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ExploreView
+          onSelectSummary={(sel) => {
+            setSummary(sel);
+            setCurrentNav('home');
+            setActiveTab('Summary');
+          }}
+        />
       ) : summary ? (
         /* Standard Home Summary Dashboard View matching reference */
         <div className="space-y-6">

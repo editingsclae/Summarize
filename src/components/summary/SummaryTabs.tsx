@@ -46,7 +46,7 @@ const ROW_1_TABS: SummaryTabType[] = [
   'Timestamps'
 ];
 
-// Row 2: Bottom 5 Deep-Dive Analysis Tabs
+// Row 2: Bottom 5 Analysis Tabs (Directly aligned 5 below 5)
 const ROW_2_TABS: SummaryTabType[] = [
   'Key Facts',
   'Quotes',
@@ -55,33 +55,54 @@ const ROW_2_TABS: SummaryTabType[] = [
   'Pros & Cons'
 ];
 
+const ALL_TABS: SummaryTabType[] = [...ROW_1_TABS, ...ROW_2_TABS];
+
 export const SummaryTabs: React.FC<SummaryTabsProps> = ({
   activeTab,
   onTabChange,
   counts
 }) => {
-  const renderTabIcon = (tab: SummaryTabType) => {
+  const renderTabIcon = (tab: SummaryTabType, isActive: boolean) => {
+    const baseIconClass = 'w-4 h-4 shrink-0 transition-colors duration-150';
+
+    if (isActive) {
+      const activeColor = 'text-indigo-600 dark:text-indigo-400';
+      switch (tab) {
+        case 'Summary': return <FileText className={`${baseIconClass} ${activeColor}`} />;
+        case 'Infographic': return <LayoutDashboard className={`${baseIconClass} ${activeColor}`} />;
+        case 'Mindmap': return <GitFork className={`${baseIconClass} ${activeColor}`} />;
+        case 'Transcript': return <List className={`${baseIconClass} ${activeColor}`} />;
+        case 'Timestamps': return <Clock className={`${baseIconClass} ${activeColor}`} />;
+        case 'Key Facts': return <Lightbulb className={`${baseIconClass} ${activeColor}`} />;
+        case 'Quotes': return <QuoteIcon className={`${baseIconClass} ${activeColor}`} />;
+        case 'Action Items': return <CheckCircle2 className={`${baseIconClass} ${activeColor}`} />;
+        case 'Concepts': return <BookMarked className={`${baseIconClass} ${activeColor}`} />;
+        case 'Pros & Cons': return <Scale className={`${baseIconClass} ${activeColor}`} />;
+      }
+    }
+
+    // Inactive state: colorful yet calm, harmonious tones
     switch (tab) {
       case 'Summary':
-        return <FileText className="w-3.5 h-3.5 shrink-0 text-indigo-500 dark:text-indigo-400" />;
+        return <FileText className={`${baseIconClass} text-indigo-500/80 group-hover:text-indigo-600 dark:text-indigo-400/80`} />;
       case 'Infographic':
-        return <LayoutDashboard className="w-3.5 h-3.5 shrink-0 text-blue-600 dark:text-blue-400" />;
+        return <LayoutDashboard className={`${baseIconClass} text-blue-500/80 group-hover:text-blue-600 dark:text-blue-400/80`} />;
       case 'Mindmap':
-        return <GitFork className="w-3.5 h-3.5 shrink-0 text-blue-600 dark:text-blue-400" />;
+        return <GitFork className={`${baseIconClass} text-violet-500/80 group-hover:text-violet-600 dark:text-violet-400/80`} />;
       case 'Transcript':
-        return <List className="w-3.5 h-3.5 shrink-0 text-indigo-500 dark:text-indigo-400" />;
+        return <List className={`${baseIconClass} text-indigo-500/80 group-hover:text-indigo-600 dark:text-indigo-400/80`} />;
       case 'Timestamps':
-        return <Clock className="w-3.5 h-3.5 shrink-0 text-amber-500 dark:text-amber-400" />;
+        return <Clock className={`${baseIconClass} text-amber-500/80 group-hover:text-amber-600 dark:text-amber-400/80`} />;
       case 'Key Facts':
-        return <Lightbulb className="w-3.5 h-3.5 shrink-0 text-amber-500 dark:text-amber-400" />;
+        return <Lightbulb className={`${baseIconClass} text-amber-500/80 group-hover:text-amber-600 dark:text-amber-400/80`} />;
       case 'Quotes':
-        return <QuoteIcon className="w-3.5 h-3.5 shrink-0 text-purple-500 dark:text-purple-400" />;
+        return <QuoteIcon className={`${baseIconClass} text-purple-500/80 group-hover:text-purple-600 dark:text-purple-400/80`} />;
       case 'Action Items':
-        return <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-500 dark:text-emerald-400" />;
+        return <CheckCircle2 className={`${baseIconClass} text-emerald-500/80 group-hover:text-emerald-600 dark:text-emerald-400/80`} />;
       case 'Concepts':
-        return <BookMarked className="w-3.5 h-3.5 shrink-0 text-cyan-500 dark:text-cyan-400" />;
+        return <BookMarked className={`${baseIconClass} text-sky-500/80 group-hover:text-sky-600 dark:text-sky-400/80`} />;
       case 'Pros & Cons':
-        return <Scale className="w-3.5 h-3.5 shrink-0 text-rose-500 dark:text-rose-400" />;
+        return <Scale className={`${baseIconClass} text-rose-500/80 group-hover:text-rose-600 dark:text-rose-400/80`} />;
     }
   };
 
@@ -96,51 +117,108 @@ export const SummaryTabs: React.FC<SummaryTabsProps> = ({
     return 0;
   };
 
-  const renderTabButton = (tab: SummaryTabType) => {
+  // 2D grid keyboard navigation (Up, Down, Left, Right)
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    let nextIndex: number | null = null;
+    if (e.key === 'ArrowRight') {
+      nextIndex = (index + 1) % ALL_TABS.length;
+    } else if (e.key === 'ArrowLeft') {
+      nextIndex = (index - 1 + ALL_TABS.length) % ALL_TABS.length;
+    } else if (e.key === 'ArrowDown') {
+      nextIndex = (index + 5) % ALL_TABS.length;
+    } else if (e.key === 'ArrowUp') {
+      nextIndex = (index - 5 + ALL_TABS.length) % ALL_TABS.length;
+    } else if (e.key === 'Home') {
+      nextIndex = 0;
+    } else if (e.key === 'End') {
+      nextIndex = ALL_TABS.length - 1;
+    }
+
+    if (nextIndex !== null) {
+      e.preventDefault();
+      const nextTab = ALL_TABS[nextIndex];
+      onTabChange(nextTab);
+      const tabId = `tab-${nextTab.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+      document.getElementById(tabId)?.focus();
+    }
+  };
+
+  const renderTabButton = (tab: SummaryTabType, index: number) => {
     const isActive = activeTab === tab;
     const count = getCount(tab);
+    const tabId = `tab-${tab.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+    const panelId = `panel-${tab.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
 
     return (
       <button
         key={tab}
+        id={tabId}
         type="button"
+        role="tab"
+        tabIndex={isActive ? 0 : -1}
+        aria-selected={isActive}
+        aria-controls={panelId}
         onClick={() => onTabChange(tab)}
-        className={`relative py-2.5 px-1 sm:px-2 text-xs sm:text-sm font-medium transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5 group ${
+        onKeyDown={(e) => handleKeyDown(e, index)}
+        className={`relative h-10 px-2.5 sm:px-3.5 flex items-center justify-start gap-2 sm:gap-2.5 rounded-[8px] text-[14px] font-medium transition-all duration-150 cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-neutral-900 group ${
           isActive
-            ? 'text-indigo-600 dark:text-indigo-400 font-semibold bg-indigo-50/80 dark:bg-indigo-950/40'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 hover:bg-neutral-50/80 dark:hover:bg-neutral-850/40'
+            ? 'bg-[#EEF2FF] dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-semibold'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800/40'
         }`}
       >
-        {renderTabIcon(tab)}
-        <span className="truncate">{tab}</span>
+        {/* Tab Icon - Fixed width and perfectly aligned */}
+        <span className="w-4 h-4 flex items-center justify-center shrink-0">
+          {renderTabIcon(tab, isActive)}
+        </span>
+
+        {/* Tab Label */}
+        <span className="truncate tracking-tight">{tab}</span>
+
+        {/* Soft, perfectly aligned numeric badge */}
         {count > 0 && (
           <span
-            className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-medium shrink-0 ${
+            className={`inline-flex items-center justify-center min-w-[17px] h-[17px] px-1.5 rounded-full text-[11px] font-medium leading-none transition-colors duration-150 ${
               isActive
-                ? 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300'
-                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 group-hover:bg-neutral-200/70 dark:group-hover:bg-neutral-700'
+                ? 'bg-indigo-100/90 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300'
+                : 'bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400 group-hover:bg-neutral-200/60 dark:group-hover:bg-neutral-700 group-hover:text-neutral-700 dark:group-hover:text-neutral-200'
             }`}
           >
             {count}
           </span>
+        )}
+
+        {/* Clear, minimal bottom active indicator */}
+        {isActive && (
+          <span
+            className="absolute bottom-0 left-2.5 right-2.5 h-[2px] bg-indigo-600 dark:bg-indigo-400 rounded-full"
+            aria-hidden="true"
+          />
         )}
       </button>
     );
   };
 
   return (
-    <div className="w-full bg-white dark:bg-[#0D1321] rounded-xl border border-neutral-200/80 dark:border-neutral-800 shadow-2xs overflow-hidden">
-      <div className="w-full overflow-x-auto no-scrollbar">
-        <div className="min-w-[580px] sm:min-w-0 flex flex-col divide-y divide-neutral-200/70 dark:divide-neutral-800/80">
+    <div className="w-full bg-white dark:bg-[#0D1321] rounded-[11px] border border-[#E5E7EB] dark:border-neutral-800 shadow-[0_1px_3px_rgba(0,0,0,0.03)] p-1 overflow-hidden">
+      {/* Horizontally scrollable wrapper on mobile without scrollbar */}
+      <div className="w-full overflow-x-auto no-scrollbar scroll-smooth">
+        <div
+          role="tablist"
+          aria-label="Summary Content Sections"
+          className="min-w-[640px] sm:min-w-0 flex flex-col"
+        >
           {/* Row 1: Top 5 Tabs */}
-          <nav className="grid grid-cols-5 w-full">
-            {ROW_1_TABS.map(renderTabButton)}
-          </nav>
+          <div className="grid grid-cols-5 gap-1 w-full">
+            {ROW_1_TABS.map((tab, idx) => renderTabButton(tab, idx))}
+          </div>
 
-          {/* Row 2: Bottom 5 Tabs (below Row 1) */}
-          <nav className="grid grid-cols-5 w-full">
-            {ROW_2_TABS.map(renderTabButton)}
-          </nav>
+          {/* Hairline Divider between the 2 rows */}
+          <div className="my-1 border-t border-[#E5E7EB]/80 dark:border-neutral-800/80" />
+
+          {/* Row 2: Bottom 5 Tabs (Directly aligned 5 below 5) */}
+          <div className="grid grid-cols-5 gap-1 w-full">
+            {ROW_2_TABS.map((tab, idx) => renderTabButton(tab, idx + 5))}
+          </div>
         </div>
       </div>
     </div>
